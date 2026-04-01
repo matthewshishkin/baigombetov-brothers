@@ -1,0 +1,99 @@
+/**
+ * Юридические страницы: кнопка «Назад» в квиз (моб. FAB + десктоп сверху/снизу)
+ * Размеры как у кнопки «Выявить риски» в шапке: .btn.btn-header (style.css)
+ */
+.legal-back-wrap-top {
+  margin-bottom: 16px;
+}
+
+.legal-back-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  box-sizing: border-box;
+  padding: 6px 8px;
+  background: #000;
+  color: #fff !important;
+  text-decoration: none;
+  border: 0.5px solid rgba(255, 255, 255, 0.28);
+  border-radius: 3px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.8rem;
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.22s ease, color 0.22s ease, opacity 0.15s ease;
+}
+
+.legal-back-btn:hover {
+  background: #222;
+  color: #fff !important;
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.legal-back-btn:active {
+  opacity: 0.9;
+}
+
+.legal-back-arrow {
+  font-size: 1em;
+  line-height: 1;
+  font-weight: 500;
+}
+
+/* Десктоп: стрелка + текст сверху */
+.legal-back-top {
+  display: none;
+}
+
+/* Мобильный: закреплённая кнопка справа снизу */
+.legal-back-fab {
+  display: none;
+  position: fixed;
+  bottom: max(16px, env(safe-area-inset-bottom, 0px));
+  right: max(14px, env(safe-area-inset-right, 0px));
+  z-index: 9999;
+}
+
+/* Десктоп: блок внизу страницы */
+.legal-back-bottom {
+  display: none;
+  text-align: center;
+  margin-top: 48px;
+  padding-bottom: 40px;
+}
+
+@media (max-width: 700px) {
+  body.has-legal-fab {
+    padding-bottom: calc(48px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .legal-back-top {
+    display: none !important;
+  }
+
+  .legal-back-fab {
+    display: inline-flex !important;
+  }
+
+  .legal-back-bottom {
+    display: none !important;
+  }
+}
+
+@media (min-width: 701px) {
+  .legal-back-top {
+    display: inline-flex !important;
+  }
+
+  .legal-back-fab {
+    display: none !important;
+  }
+
+  .legal-back-bottom {
+    display: block;
+  }
+}

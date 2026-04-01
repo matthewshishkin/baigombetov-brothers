@@ -1,0 +1,64 @@
+:root {
+  --text: #111827;
+  --muted: #6b7280;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  min-height: 100dvh;
+  background: #fff;
+  color: var(--text);
+  padding: 0;
+}
+.ty-card {
+  width: min(520px, 100%);
+  background: #fff;
+  border-radius: 16px;
+  padding: 48px 40px 40px;
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.22);
+  text-align: center;
+}
+/* Иконка галочки — берётся из style.css (success-check). */
+.ty-card h1 {
+  margin: 0 0 6px;
+  font-size: 1.95rem;
+  font-family: 'PlayfairDisplay', Arial, Helvetica, sans-serif;
+  font-weight: 400;
+}
+.ty-sub {
+  margin: 0;
+  color: var(--muted);
+}
+.ty-note {
+  margin: 26px 0 34px;
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.45;
+}
+.ty-btn {
+  display: inline-block;
+  text-decoration: none;
+  border-radius: 3px;
+  padding: 14px 36px;
+  background: #000;
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: background .2s ease;
+}
+.ty-btn:hover { background: #222; }
+
+/* Выравнивание карточки как в модальном квизе */
+.thankyou-page {
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: #fff;
+}
+
+.thankyou-page .quiz-container {
+  opacity: 1 !important;
+  transform: none !important;
+}
