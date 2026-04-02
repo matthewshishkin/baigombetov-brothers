@@ -352,6 +352,22 @@ h3 { font-weight: normal; font-size: 1.05rem; }
   100% { opacity: 0; }
 }
 
+/* =============================================
+   CTA SHAKE (every 2s, non-destructive)
+   - uses CSS variable so we don't override existing transforms
+   ============================================= */
+@keyframes ctaShake2sVar {
+  0%   { --shake-x: 0px; }
+  1.5% { --shake-x: -2px; }
+  3%   { --shake-x: 2px; }
+  4.5% { --shake-x: -2px; }
+  6%   { --shake-x: 2px; }
+  7.5% { --shake-x: -1px; }
+  9%   { --shake-x: 1px; }
+  10%  { --shake-x: 0px; }
+  100% { --shake-x: 0px; }
+}
+
 .hero-overlay {
   position: absolute;
   inset: 0;
@@ -378,7 +394,9 @@ h3 { font-weight: normal; font-size: 1.05rem; }
   position: absolute;
   bottom: 60px;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translateX(-50%) translateX(var(--shake-x, 0px));
+  animation: ctaShake2sVar 2s infinite;
+  will-change: transform;
 }
 
 .hero-title { margin-bottom: 36px; color: #fff; font-size: clamp(1.02rem, 2.091vw, 2.652rem); font-weight: 500; width: 100%; }
@@ -836,6 +854,13 @@ h3 { font-weight: normal; font-size: 1.05rem; }
   font-weight: 500;
   cursor: pointer;
   transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+}
+
+/* Bonus CTA shake */
+.risk-bonus-btn{
+  transform: translateX(var(--shake-x, 0px));
+  animation: ctaShake2sVar 2s infinite;
+  will-change: transform;
 }
 .risk-bonus-btn:hover{
   background: rgba(0,0,0,0.04);
@@ -2184,6 +2209,13 @@ blockquote {
   transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
 }
 
+/* “Работа с нашей командой” CTA shake */
+.tariff-card--filled .tariff-btn--filled {
+  transform: translateX(var(--shake-x, 0px));
+  animation: ctaShake2sVar 2s infinite;
+  will-change: transform;
+}
+
 .tariff-card--filled .tariff-btn--filled:hover {
   background: #f5f5f5;
   color: #000;
@@ -2338,6 +2370,13 @@ blockquote {
     color 0.22s ease,
     border-color 0.22s ease,
     box-shadow 0.22s ease;
+}
+
+/* Last block CTA shake */
+.cta-section .hero-btn {
+  transform: translateX(var(--shake-x, 0px));
+  animation: ctaShake2sVar 2s infinite;
+  will-change: transform;
 }
 .cta-section .hero-btn:hover {
   background: var(--blue-dark);
