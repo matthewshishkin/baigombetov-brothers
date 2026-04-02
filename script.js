@@ -1812,6 +1812,24 @@ document.addEventListener('DOMContentLoaded', () => {
   handleQuizContactHash();
   window.addEventListener('hashchange', handleQuizContactHash);
 
+  // CTA shake: wrap text so animation doesn't fight layout transforms
+  (function initCtaShake() {
+    const targets = [
+      document.querySelector('.hero--video .hero-btn'),
+      document.querySelector('.cta-section .hero-btn'),
+      document.querySelector('.risk-bonus-btn'),
+      document.querySelector('.tariff-card--filled .tariff-btn--filled'),
+    ].filter(Boolean);
+
+    targets.forEach((btn) => {
+      if (!btn || btn.querySelector('.cta-shake-inner')) return;
+      const span = document.createElement('span');
+      span.className = 'cta-shake-inner';
+      while (btn.firstChild) span.appendChild(btn.firstChild);
+      btn.appendChild(span);
+    });
+  })();
+
   /* =============================================
      SCROLL ANIMATIONS — Law cards
      ============================================= */

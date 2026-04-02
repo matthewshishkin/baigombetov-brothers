@@ -365,13 +365,19 @@ h3 { font-weight: normal; font-size: 1.05rem; }
    CTA SHAKE (every 2s, non-destructive)
    - uses CSS variable so we don't override existing transforms
    ============================================= */
-/* Copied from reference: heroCtaShake (converted to CSS vars to preserve existing transforms) */
-@keyframes heroCtaShakeVar {
-  0%, 80%, 100% { --shake-x: 0px; --shake-rot: 0deg; }
-  84% { --shake-x: -1px; --shake-rot: -0.4deg; }
-  88% { --shake-x:  1px; --shake-rot:  0.4deg; }
-  92% { --shake-x: -1px; --shake-rot: -0.3deg; }
-  96% { --shake-x:  1px; --shake-rot:  0.3deg; }
+/* Copied from reference: heroCtaShake */
+@keyframes heroCtaShake {
+  0%, 80%, 100% { transform: translateX(0) rotate(0); }
+  84% { transform: translateX(-1px) rotate(-0.4deg); }
+  88% { transform: translateX(1px) rotate(0.4deg); }
+  92% { transform: translateX(-1px) rotate(-0.3deg); }
+  96% { transform: translateX(1px) rotate(0.3deg); }
+}
+
+.cta-shake-inner {
+  display: inline-block;
+  animation: heroCtaShake 2.5s ease-in-out infinite;
+  will-change: transform;
 }
 
 .hero-overlay {
@@ -400,9 +406,7 @@ h3 { font-weight: normal; font-size: 1.05rem; }
   position: absolute;
   bottom: 60px;
   left: 50%;
-  transform: translateX(-50%) translateX(var(--shake-x, 0px)) rotate(var(--shake-rot, 0deg));
-  animation: heroCtaShakeVar 2.5s ease-in-out infinite;
-  will-change: transform;
+  transform: translateX(-50%);
 }
 
 .hero-title { margin-bottom: 36px; color: #fff; font-size: clamp(1.02rem, 2.091vw, 2.652rem); font-weight: 500; width: 100%; }
@@ -864,9 +868,6 @@ h3 { font-weight: normal; font-size: 1.05rem; }
 
 /* Bonus CTA shake */
 .risk-bonus-btn{
-  transform: translateX(var(--shake-x, 0px)) rotate(var(--shake-rot, 0deg));
-  animation: heroCtaShakeVar 2.5s ease-in-out infinite;
-  will-change: transform;
 }
 .risk-bonus-btn:hover{
   background: rgba(0,0,0,0.04);
@@ -2217,9 +2218,6 @@ blockquote {
 
 /* “Работа с нашей командой” CTA shake */
 .tariff-card--filled .tariff-btn--filled {
-  transform: translateX(var(--shake-x, 0px)) rotate(var(--shake-rot, 0deg));
-  animation: heroCtaShakeVar 2.5s ease-in-out infinite;
-  will-change: transform;
 }
 
 .tariff-card--filled .tariff-btn--filled:hover {
@@ -2380,9 +2378,6 @@ blockquote {
 
 /* Last block CTA shake */
 .cta-section .hero-btn {
-  transform: translateX(var(--shake-x, 0px)) rotate(var(--shake-rot, 0deg));
-  animation: heroCtaShakeVar 2.5s ease-in-out infinite;
-  will-change: transform;
 }
 .cta-section .hero-btn:hover {
   background: var(--blue-dark);
@@ -3584,7 +3579,7 @@ a.q-submit-btn {
    ============================================= */
 @media (max-width: 960px) {
   /* Hero */
-  .hero-btn                { position: static; transform: translateX(var(--shake-x, 0px)) rotate(var(--shake-rot, 0deg)); display: block; width: 100%; text-align: center; padding: 16px 24px; box-sizing: border-box; margin-top: auto; animation: heroCtaShakeVar 2.5s ease-in-out infinite; will-change: transform; }
+  .hero-btn                { position: static; transform: none; display: block; width: 100%; text-align: center; padding: 16px 24px; box-sizing: border-box; margin-top: auto; }
 
   .cta-section .hero-btn {
     display: block;
