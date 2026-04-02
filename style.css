@@ -357,13 +357,12 @@ h3 { font-weight: normal; font-size: 1.05rem; }
    - uses CSS variable so we don't override existing transforms
    ============================================= */
 @keyframes ctaShake2sVar {
+  /* smoother shake: short movement + long pause (period controlled by animation-duration) */
   0%   { --shake-x: 0px; }
-  1.5% { --shake-x: -2px; }
-  3%   { --shake-x: 2px; }
-  4.5% { --shake-x: -2px; }
-  6%   { --shake-x: 2px; }
-  7.5% { --shake-x: -1px; }
-  9%   { --shake-x: 1px; }
+  2%   { --shake-x: -1px; }
+  4%   { --shake-x: 1px; }
+  6%   { --shake-x: -1px; }
+  8%   { --shake-x: 1px; }
   10%  { --shake-x: 0px; }
   100% { --shake-x: 0px; }
 }
@@ -395,7 +394,7 @@ h3 { font-weight: normal; font-size: 1.05rem; }
   bottom: 60px;
   left: 50%;
   transform: translateX(-50%) translateX(var(--shake-x, 0px));
-  animation: ctaShake2sVar 2s infinite;
+  animation: ctaShake2sVar 2.5s infinite;
   will-change: transform;
 }
 
@@ -859,7 +858,7 @@ h3 { font-weight: normal; font-size: 1.05rem; }
 /* Bonus CTA shake */
 .risk-bonus-btn{
   transform: translateX(var(--shake-x, 0px));
-  animation: ctaShake2sVar 2s infinite;
+  animation: ctaShake2sVar 2.5s infinite;
   will-change: transform;
 }
 .risk-bonus-btn:hover{
@@ -2212,7 +2211,7 @@ blockquote {
 /* “Работа с нашей командой” CTA shake */
 .tariff-card--filled .tariff-btn--filled {
   transform: translateX(var(--shake-x, 0px));
-  animation: ctaShake2sVar 2s infinite;
+  animation: ctaShake2sVar 2.5s infinite;
   will-change: transform;
 }
 
@@ -2375,7 +2374,7 @@ blockquote {
 /* Last block CTA shake */
 .cta-section .hero-btn {
   transform: translateX(var(--shake-x, 0px));
-  animation: ctaShake2sVar 2s infinite;
+  animation: ctaShake2sVar 2.5s infinite;
   will-change: transform;
 }
 .cta-section .hero-btn:hover {
