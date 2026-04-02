@@ -618,35 +618,34 @@ h3 { font-weight: normal; font-size: 1.05rem; }
 
 .law-freq { font-size: 1.65rem; font-weight: 700; font-family: 'PlayfairDisplay', Arial, Helvetica, sans-serif; color: #fff; margin-bottom: 10px; }
 .law-card h3 { margin-bottom: 8px; color: #fff; }
+/* Disable spoiler cover layer: show title & details normally */
 .law-card-title{
-  text-align: center;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 6; /* выше canvas и blur деталей */
-  width: 100%;
-  margin: 0;
-  padding: 0 10px;
+  text-align: left;
+  position: static;
+  transform: none;
+  z-index: auto;
+  width: auto;
+  margin: 0 0 8px 0;
+  padding: 0;
   color: #fff;
-  font-size: 1.4em; /* уменьшить на 30% (2em * 0.7) */
+  font-size: 1.4em;
   line-height: 1.2;
   opacity: 1;
-  transition: opacity 0.25s ease;
+  transition: none;
 }
 
 .law-card--revealed .law-card-title{
-  opacity: 0;
+  opacity: 1;
 }
 .law-card p  { font-size: 1.76rem; line-height: 1.6; font-weight: 200; font-family: 'Inter', Arial, Helvetica, sans-serif; color: rgba(255, 255, 255, 0.80); margin: 0; transform: none; }
 
 /* Telegram-like spoiler: детали размыты/полускрыты до клика */
 .law-details{
-  opacity: 0.35;
-  filter: blur(10px);
+  opacity: 1;
+  filter: none;
   max-height: none;
   overflow: hidden;
-  transition: opacity 0.25s ease, filter 0.35s ease;
+  transition: none;
   position: relative;
   z-index: 1;
   height: 100%;
@@ -657,23 +656,16 @@ h3 { font-weight: normal; font-size: 1.05rem; }
 }
 .law-card--revealed .law-details{
   opacity: 1;
-  filter: blur(0px);
+  filter: none;
   max-height: none;
 }
 
 /* Canvas overlay for telegram spoiler particles */
 .law-spoiler-canvas{
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 5;
-  pointer-events: none;
-  opacity: 1;
-  transition: opacity 0.25s ease;
+  display: none;
 }
 .law-card--revealed .law-spoiler-canvas{
-  opacity: 0;
+  display: none;
 }
 
 /* =============================================
