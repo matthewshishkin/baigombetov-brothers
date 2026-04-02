@@ -43,50 +43,16 @@ window.addEventListener('scroll', () => {
 }, { passive: true });
 
 /* =============================================
-   Image download on click (no preview)
+   Защита от «Сохранить изображение» / перетаскивания (полного запрета в браузере нет — только усложнение для обычного пользователя)
    ============================================= */
 document.addEventListener('DOMContentLoaded', () => {
-  const downloadImgs = document.querySelectorAll('.owner-img, .cta-img');
-
-  const downloadImage = async (src) => {
-    try {
-      // Скачиваем как blob, чтобы не открывать превью/картинку в браузере
-      const res = await fetch(src, { cache: 'no-store' });
-      const blob = await res.blob();
-      const url = URL.createObjectURL(blob);
-
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = src.split('/').pop() || 'image';
-      a.style.display = 'none';
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-
-      // Отпускаем объект URL после старта скачивания
-      window.setTimeout(() => URL.revokeObjectURL(url), 1500);
-    } catch (_) {
-      // Фолбэк: если blob недоступен, откроем ссылку через download (в большинстве браузеров без предпросмотра)
-      const a = document.createElement('a');
-      a.href = src;
-      a.download = src.split('/').pop() || 'image';
-      a.style.display = 'none';
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-    }
+  const blockAssetGrab = (e) => {
+    const t = e.target;
+    if (t.nodeType !== Node.ELEMENT_NODE) return;
+    if (t.closest('.protect-asset, .header-logo-img, .certs-thumb-btn')) e.preventDefault();
   };
-
-  downloadImgs.forEach((img) => {
-    if (!img) return;
-    img.style.cursor = 'pointer';
-    img.addEventListener('click', async (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      const src = img.currentSrc || img.src;
-      if (src) await downloadImage(src);
-    });
-  });
+  document.addEventListener('contextmenu', blockAssetGrab, true);
+  document.addEventListener('dragstart', blockAssetGrab, true);
 });
 
 /* =============================================
@@ -2448,10 +2414,21 @@ document.addEventListener('DOMContentLoaded', () => {
     }, AUTOPLAY_MS);
   }
 
+  const prefetchSet = new Set();
+  function prefetchCertPdf(href) {
+    if (!href || prefetchSet.has(href)) return;
+    prefetchSet.add(href);
+    try {
+      window.fetch(href, { cache: 'force-cache', mode: 'same-origin' }).catch(() => {});
+    } catch (_) {}
+  }
+
   function openCertViewer(pdfSrc) {
     if (!modal || !iframe) return;
+    prefetchCertPdf(pdfSrc);
     iframe.title = legitModalTitle();
-    iframe.src = pdfSrc;
+    // Свой просмотр (PDF.js), без встроенной панели браузера с «Скачать»
+    iframe.src = `cert-pdf-viewer.html?f=${encodeURIComponent(pdfSrc)}`;
     modal.classList.add('open');
     modal.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
@@ -2467,11 +2444,37 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   track.querySelectorAll('.certs-thumb-btn').forEach((btn) => {
+    const pdf = btn.getAttribute('data-pdf');
     btn.addEventListener('click', () => {
-      const pdf = btn.getAttribute('data-pdf');
       if (pdf) openCertViewer(pdf);
     });
+    btn.addEventListener('mouseenter', () => prefetchCertPdf(pdf), { passive: true });
+    btn.addEventListener('focus', () => prefetchCertPdf(pdf));
   });
+
+  const prefetchObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((en) => {
+        if (!en.isIntersecting) return;
+        prefetchObserver.disconnect();
+        const urls = track.querySelectorAll('.certs-thumb-btn[data-pdf]');
+        let i = 0;
+        const pump = () => {
+          if (i >= urls.length) return;
+          prefetchCertPdf(urls[i].getAttribute('data-pdf'));
+          i += 1;
+          if (window.requestIdleCallback) {
+            window.requestIdleCallback(pump, { timeout: 4000 });
+          } else {
+            window.setTimeout(pump, 100);
+          }
+        };
+        pump();
+      });
+    },
+    { root: null, rootMargin: '240px 0px', threshold: 0.02 }
+  );
+  prefetchObserver.observe(root);
 
   prevBtn?.addEventListener('click', () => goTo(index - 1));
   nextBtn?.addEventListener('click', () => goTo(index + 1));

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>Просмотр документа</title>
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; background: #eceae6; }
+    #app { padding: 12px 12px 28px; }
+    #status {
+      text-align: center;
+      padding: 28px 16px;
+      font-family: system-ui, -apple-system, sans-serif;
+      font-size: 15px;
+      color: #444;
+    }
+    #pages {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+    }
+    canvas {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      background: #fff;
+    }
+    html.is-thumb,
+    html.is-thumb body {
+      min-height: 0;
+      overflow: hidden;
+      background: #fff;
+    }
+    html.is-thumb #app {
+      padding: 0;
+    }
+    html.is-thumb #pages {
+      gap: 0;
+    }
+    html.is-thumb canvas {
+      box-shadow: none;
+      max-width: none;
+    }
+    .err { color: #b00020; }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <div id="status">Загрузка…</div>
+    <div id="pages" hidden></div>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js" crossorigin="anonymous"></script>
+  <script>
+    (function () {
+      document.addEventListener('contextmenu', function (e) { e.preventDefault(); }, true);
+      document.addEventListener('dragstart', function (e) { e.preventDefault(); }, true);
+
+      if (typeof pdfjsLib === 'undefined') {
+        document.getElementById('status').textContent = 'Не удалось загрузить просмотрщик.';
+        document.getElementById('status').classList.add('err');
+        return;
+      }
+      pdfjsLib.GlobalWorkerOptions.workerSrc =
+        'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+      var statusEl = document.getElementById('status');
+      var pagesEl = document.getElementById('pages');
+      var params = new URLSearchParams(location.search);
+      var thumb = params.get('thumb') === '1';
+      if (thumb) {
+        document.documentElement.classList.add('is-thumb');
+      }
+      var f = params.get('f');
+      if (!f) {
+        statusEl.textContent = 'Документ не указан.';
+        statusEl.classList.add('err');
+        return;
+      }
+      try {
+        f = decodeURIComponent(f);
+      } catch (e) {
+        statusEl.textContent = 'Неверная ссылка.';
+        statusEl.classList.add('err');
+        return;
+      }
+      var pathOnly = f.split('?')[0];
+      if (pathOnly.indexOf('..') !== -1 || pathOnly.indexOf('\\') !== -1) {
+        statusEl.textContent = 'Доступ к файлу запрещён.';
+        statusEl.classList.add('err');
+        return;
+      }
+      var okCert = /^certificates\/[a-zA-Z0-9._-]+\.pdf$/i.test(pathOnly);
+      var okLead = /^lead-magnet-1080x1920\.pdf$/i.test(pathOnly);
+      if (!okCert && !okLead) {
+        statusEl.textContent = 'Доступ к файлу запрещён.';
+        statusEl.classList.add('err');
+        return;
+      }
+      var pdfUrl = new URL(f, location.href).href;
+
+      pdfjsLib.getDocument({ url: pdfUrl }).promise.then(function (pdf) {
+        statusEl.style.display = 'none';
+        pagesEl.hidden = false;
+        var dpr = Math.min(window.devicePixelRatio || 1, 2);
+        var cw = thumb
+          ? Math.max(64, document.documentElement.clientWidth - 2)
+          : Math.max(260, document.documentElement.clientWidth - 24);
+        var lastPage = thumb ? 1 : pdf.numPages;
+
+        function renderPage(i) {
+          return pdf.getPage(i).then(function (page) {
+            var vp1 = page.getViewport({ scale: 1 });
+            var cssScale = Math.min(cw / vp1.width, thumb ? 3 : 2);
+            var viewport = page.getViewport({ scale: cssScale * dpr });
+            var canvas = document.createElement('canvas');
+            var ctx = canvas.getContext('2d', { alpha: false });
+            canvas.width = viewport.width;
+            canvas.height = viewport.height;
+            canvas.style.width = vp1.width * cssScale + 'px';
+            canvas.style.height = vp1.height * cssScale + 'px';
+            pagesEl.appendChild(canvas);
+            return page.render({ canvasContext: ctx, viewport: viewport }).promise;
+          });
+        }
+
+        var chain = Promise.resolve();
+        for (var p = 1; p <= lastPage; p++) {
+          (function (n) {
+            chain = chain.then(function () { return renderPage(n); });
+          })(p);
+        }
+        return chain;
+      }).catch(function () {
+        statusEl.textContent = 'Не удалось открыть документ.';
+        statusEl.classList.add('err');
+      });
+    })();
+  </script>
+</body>
+</html>

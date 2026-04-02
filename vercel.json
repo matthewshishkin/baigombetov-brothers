@@ -4,5 +4,16 @@
     "api/send-telegram.js": {
       "maxDuration": 15
     }
-  }
+  },
+  "headers": [
+    {
+      "source": "/certificates/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    }
+  ]
 }

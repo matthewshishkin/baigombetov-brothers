@@ -843,6 +843,39 @@ h3 { font-weight: normal; font-size: 1.05rem; }
   inset: 0;
   pointer-events: none;
 }
+/* Превью лид-магнита: PDF в iframe + декоративный «задний» лист */
+.risk-bonus-stack--pdf .risk-bonus-pdf-deco{
+  position: absolute;
+  right: -8px;
+  bottom: -30px;
+  width: 168px;
+  height: 206px;
+  background: linear-gradient(145deg, #f0f0f0 0%, #e4e4e4 100%);
+  transform: rotate(7deg);
+  z-index: 1;
+  box-shadow:
+    0 18px 40px rgba(0,0,0,0.42),
+    0 8px 18px rgba(0,0,0,0.24);
+  filter: contrast(0.98) saturate(0.92) brightness(0.96);
+}
+.risk-bonus-stack--pdf .risk-bonus-pdf-frame{
+  position: absolute;
+  display: block;
+  right: -22px;
+  bottom: -18px;
+  width: 168px;
+  height: 206px;
+  border: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  transform: rotate(-6deg);
+  z-index: 2;
+  box-shadow:
+    0 18px 40px rgba(0,0,0,0.42),
+    0 8px 18px rgba(0,0,0,0.24);
+  background: #fff;
+}
 .risk-bonus-preview-img{
   position: absolute;
   display: block;
@@ -914,6 +947,20 @@ h3 { font-weight: normal; font-size: 1.05rem; }
   .risk-bonus-text{ font-size: 0.85rem; } /* -15% */
   .risk-card--tax .risk-tax-text{ max-height: 116px; }
   .risk-bonus-preview{ height: 132px; }
+  .risk-bonus-stack--pdf .risk-bonus-pdf-deco{
+    width: 136px;
+    height: 176px;
+    right: -4px;
+    bottom: -26px;
+    transform: rotate(7deg);
+  }
+  .risk-bonus-stack--pdf .risk-bonus-pdf-frame{
+    width: 136px;
+    height: 176px;
+    right: -16px;
+    bottom: -14px;
+    transform: rotate(-6deg);
+  }
   .risk-bonus-preview-img{
     width: 136px;
     height: 176px;
@@ -2478,6 +2525,17 @@ blockquote {
   box-sizing: border-box;
   border: 0.75px solid #000;
   display: block;
+}
+
+img.protect-asset,
+.header-logo-img.protect-asset {
+  -webkit-user-drag: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.certs-thumb-btn img.protect-asset {
+  pointer-events: none;
 }
 
 /* CTA на десктопе: как блок 1 (hero) — по центру, на высоту экрана, белый фон; кнопка — без изменений (правила .cta-section .hero-btn выше) */
