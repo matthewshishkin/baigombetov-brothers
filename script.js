@@ -420,12 +420,12 @@ function updateHeaderGlassProgress() {
   const raw = (window.scrollY - start) / Math.max(1, end - start);
   const progress = clamp01(raw);
 
-  // 0%: плотный белый без blur
-  // 100%: белый "glass" с blur
-  const alpha = 1 - (1 - 0.86) * progress;
+  // 0%: плотный чёрный без blur
+  // 100%: чёрный "glass" с blur
+  const alpha = 1 - (1 - 0.72) * progress;
   const blur = 10 * progress;
 
-  header.style.background = `rgba(255, 255, 255, ${alpha.toFixed(3)})`;
+  header.style.background = `rgba(0, 0, 0, ${alpha.toFixed(3)})`;
   header.style.backdropFilter = `blur(${blur.toFixed(2)}px)`;
   header.style.webkitBackdropFilter = `blur(${blur.toFixed(2)}px)`;
 }
