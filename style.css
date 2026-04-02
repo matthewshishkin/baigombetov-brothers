@@ -3585,7 +3585,7 @@ a.q-submit-btn {
    ============================================= */
 @media (max-width: 960px) {
   /* Hero */
-  .hero-btn                { position: static; transform: none; display: block; width: 100%; text-align: center; padding: 16px 24px; box-sizing: border-box; margin-top: auto; }
+  .hero-btn                { position: static; transform: translateX(var(--shake-x, 0px)); display: block; width: 100%; text-align: center; padding: 16px 24px; box-sizing: border-box; margin-top: auto; animation: ctaShake2sVar 2.5s infinite; will-change: transform; }
 
   .cta-section .hero-btn {
     display: block;
