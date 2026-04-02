@@ -1815,8 +1815,21 @@ document.addEventListener('DOMContentLoaded', () => {
   // CTA shake handled via CSS on button elements
 
   /* =============================================
-     Law cards entrance animation disabled by design
+     SCROLL ANIMATIONS — Law cards
      ============================================= */
+  const lawCards = document.querySelectorAll('.law-card');
+  if (lawCards.length) {
+    const lawObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const delay = parseInt(entry.target.dataset.delay || 0);
+        setTimeout(() => entry.target.classList.add('animate-in'), delay);
+        lawObserver.unobserve(entry.target);
+      });
+    }, { threshold: 0.18, rootMargin: '0px 0px -40px 0px' });
+
+    lawCards.forEach(card => lawObserver.observe(card));
+  }
 
   /* =============================================
      SCROLL ANIMATIONS — Risk cards (same behavior, separate observer)

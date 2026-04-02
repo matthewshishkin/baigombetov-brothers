@@ -599,10 +599,10 @@ h3 { font-weight: normal; font-size: 1.05rem; }
   overflow: hidden;
 }
 
-/* Disable entrance animation for law cards */
+/* Entrance animation for law cards (sequential on scroll) */
 .js .law-card {
-  opacity: 1;
-  transform: none;
+  opacity: 0;
+  transform: translateY(32px);
 }
 
 /* Десктоп: фиксированный размер карточек (без изменения при клике) */
@@ -613,7 +613,7 @@ h3 { font-weight: normal; font-size: 1.05rem; }
 }
 .js .law-card.animate-in {
   opacity: 1;
-  transform: none;
+  transform: translateY(0);
 }
 
 .law-freq { font-size: 1.65rem; font-weight: 700; font-family: 'PlayfairDisplay', Arial, Helvetica, sans-serif; color: #fff; margin-bottom: 10px; }
@@ -3614,8 +3614,7 @@ a.q-submit-btn {
   /* Law cards */
   .law-cards               { grid-template-columns: 1fr; }
   .law-cards               { margin-top: 46px; }
-  .law-card                { transform: none; height: auto; }
-  .law-card.animate-in     { transform: none; }
+  .law-card                { height: auto; }
 
   /* Risk cards: одна колонка на планшете/мобиле — длинные KK-строки не ломают сетку */
   .risk-cards              { grid-template-columns: 1fr; }
