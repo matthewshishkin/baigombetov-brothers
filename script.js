@@ -1521,7 +1521,8 @@ function validateQuizContactForm(form) {
   const phoneInput = form.querySelector('input[name="phone"]');
   const phoneRaw = phoneInput && phoneInput.value ? phoneInput.value : '';
   const phoneDigits = phoneRaw.replace(/\D/g, '');
-  const isValidPhone = phoneDigits.length === 11 && phoneDigits.startsWith('7');
+  const isValidPhone =
+    phoneDigits.length === 11 && (phoneDigits.startsWith('7') || phoneDigits.startsWith('8'));
 
   if (!isValidPhone) {
     if (phoneInput) {
@@ -1639,26 +1640,6 @@ document.addEventListener('DOMContentLoaded', () => {
         .forEach(b => b.classList.remove('selected'));
       btn.classList.add('selected');
       answers[step] = val;
-      if (step === '1') {
-        const wrap = document.getElementById('q1OtherWrap');
-        const inp = document.getElementById('q1OtherInput');
-        if (val === 'other') {
-          if (wrap) wrap.classList.remove('q-other-field--hidden');
-          delete answers['1_other'];
-          if (inp) {
-            inp.classList.remove('q-other-input--invalid');
-            setTimeout(() => inp.focus(), 0);
-          }
-          quizSaveDraft();
-          return;
-        }
-        if (wrap) wrap.classList.add('q-other-field--hidden');
-        if (inp) {
-          inp.value = '';
-          inp.classList.remove('q-other-input--invalid');
-        }
-        delete answers['1_other'];
-      }
       quizSaveDraft();
       setTimeout(nextStep, 300);
     });
@@ -1690,6 +1671,27 @@ document.addEventListener('DOMContentLoaded', () => {
       const step = btn.dataset.step;
       const val = btn.dataset.val;
 
+      // Шаг 4: если выбран последний вариант — остальные нельзя выбрать
+      if (step === '4') {
+        const LAST_VAL = 'consult';
+        const all = Array.from(document.querySelectorAll('.q-opt.multi[data-step="4"]'));
+        const lastBtn = all.find((b) => b.dataset.val === LAST_VAL);
+        const others = all.filter((b) => b !== lastBtn);
+
+        const lastSelected = !!(lastBtn && lastBtn.classList.contains('selected'));
+        const isLastClick = String(val) === LAST_VAL;
+        const willSelectLast = isLastClick && !btn.classList.contains('selected');
+
+        // Если последний уже выбран — не даём выбирать другие
+        if (!isLastClick && lastSelected) return;
+
+        // Если выбираем последний — снимаем выбор с остальных
+        if (willSelectLast) {
+          others.forEach((b) => b.classList.remove('selected'));
+          answers[step] = [];
+        }
+      }
+
       // Шаг 3: если выбран любой из первых трех вариантов — «Свой вариант» недоступен
       if (step === '3') {
         const firstVals = ['san_tax', 'suppliers', 'guests_hr'];
@@ -1712,6 +1714,19 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!answers[step].includes(val)) answers[step].push(val);
       } else {
         answers[step] = answers[step].filter(v => v !== val);
+      }
+
+      // Шаг 4: обновляем disabled-стейты в зависимости от выбранного последнего варианта
+      if (step === '4') {
+        const LAST_VAL = 'consult';
+        const all = Array.from(document.querySelectorAll('.q-opt.multi[data-step="4"]'));
+        const lastBtn = all.find((b) => b.dataset.val === LAST_VAL);
+        const others = all.filter((b) => b !== lastBtn);
+        const lastSelected = !!(lastBtn && lastBtn.classList.contains('selected'));
+        others.forEach((b) => {
+          b.disabled = lastSelected;
+          b.setAttribute('aria-disabled', lastSelected ? 'true' : 'false');
+        });
       }
 
       if (step === '3') {
@@ -1754,6 +1769,22 @@ document.addEventListener('DOMContentLoaded', () => {
       quizSaveDraft();
     });
   });
+
+  // Phone input: allow 7/8, limit to 11 digits, shake on overflow
+  const phoneInput = document.querySelector('.q-contact-form input[name="phone"]');
+  if (phoneInput) {
+    phoneInput.addEventListener('input', () => {
+      const raw = phoneInput.value || '';
+      const digits = raw.replace(/\D/g, '');
+      if (digits.length <= 11) return;
+
+      phoneInput.value = digits.slice(0, 11);
+
+      phoneInput.classList.remove('quiz-field-limit');
+      void phoneInput.offsetWidth;
+      phoneInput.classList.add('quiz-field-limit');
+    });
+  }
 
   const quizModalEl = document.getElementById('quizModal');
   if (quizModalEl) {

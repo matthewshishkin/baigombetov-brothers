@@ -222,10 +222,18 @@
         <div class="stats-showcase-label" data-i18n="stat_l5">сэкономлено клиентам на штрафах</div>
       </div>
       <div class="stats-showcase-item" data-stat-index="2">
+        <div class="stats-showcase-num" data-i18n="stat_n7">154 чел</div>
+        <div class="stats-showcase-label" data-i18n="stat_l7">вернули свои средства</div>
+      </div>
+      <div class="stats-showcase-item" data-stat-index="3">
+        <div class="stats-showcase-num" data-i18n="stat_n8">2-3 мес</div>
+        <div class="stats-showcase-label" data-i18n="stat_l8">средний период возврата</div>
+      </div>
+      <div class="stats-showcase-item" data-stat-index="4">
         <div class="stats-showcase-num" data-counter data-target="15" data-suffix="+">0+</div>
         <div class="stats-showcase-label" data-i18n="stat_l3">лет опыта</div>
       </div>
-      <div class="stats-showcase-item" data-stat-index="3">
+      <div class="stats-showcase-item" data-stat-index="5">
         <div class="stats-showcase-num" data-counter data-target="11" data-suffix="">0</div>
         <div class="stats-showcase-label" data-i18n="stat_l2">юристов в команде</div>
       </div>
@@ -376,13 +384,10 @@
           <h3 data-i18n="q1_h">Какой у вас бизнес?</h3>
           <p class="q-hint" data-i18n="q1_hint">Выберите один вариант</p>
           <div class="q-options">
-            <button class="q-opt single" data-step="1" data-val="restaurant" data-i18n="q1_o1">Ресторан / кафе / бар</button>
-            <button class="q-opt single" data-step="1" data-val="hotel" data-i18n="q1_o2">Отель / хостел / апартаменты</button>
-            <button class="q-opt single" data-step="1" data-val="delivery" data-i18n="q1_o3">Доставка еды / кейтеринг</button>
-            <button class="q-opt single q-opt--other" data-step="1" data-val="other" data-i18n="q1_o4">Свой вариант</button>
-          </div>
-          <div class="q-other-field q-other-field--hidden" id="q1OtherWrap">
-            <input type="text" id="q1OtherInput" class="q-other-input" maxlength="140" data-i18n-placeholder="q1_other_ph" placeholder="Опишите свой вариант" autocomplete="off" aria-label="" data-i18n-aria="q1_other_aria" />
+            <button class="q-opt single" data-step="1" data-val="lt3m" data-i18n="q1_o1">Ресторан / кафе / бар</button>
+            <button class="q-opt single" data-step="1" data-val="3_10m" data-i18n="q1_o2">Отель / хостел / апартаменты</button>
+            <button class="q-opt single" data-step="1" data-val="10_50m" data-i18n="q1_o3">Доставка еды / кейтеринг</button>
+            <button class="q-opt single" data-step="1" data-val="gte50m" data-i18n="q1_o4">Свой вариант</button>
           </div>
           <div class="q-nav">
             <button type="button" class="q-btn-back" onclick="prevStep()" data-i18n="q_back">Назад</button>
@@ -419,13 +424,9 @@
           <h3 data-i18n="q3_h">С какими проблемами вы уже сталкивались?</h3>
           <p class="q-hint" data-i18n="q3_hint">Можно выбрать несколько</p>
           <div class="q-options">
-            <button class="q-opt multi" data-step="3" data-val="san_tax" data-i18n="q3_o1">Санитарный контроль или налоговая</button>
-            <button class="q-opt multi" data-step="3" data-val="suppliers" data-i18n="q3_o2">С поставщиками или арендодателями</button>
-            <button class="q-opt multi" data-step="3" data-val="guests_hr" data-i18n="q3_o3">Жалобы гостей и кадровые конфликты</button>
-            <button class="q-opt multi q-opt--other" data-step="3" data-val="other" data-i18n="q3_o4">Свой вариант</button>
-          </div>
-          <div class="q-other-field q-other-field--hidden" id="q3OtherWrap">
-            <input type="text" id="q3OtherInput" class="q-other-input" maxlength="140" data-i18n-placeholder="q3_other_ph" placeholder="Опишите свой вариант" autocomplete="off" aria-label="" data-i18n-aria="q3_other_aria" />
+            <button class="q-opt single" data-step="3" data-val="yes" data-i18n="q3_o1">Да</button>
+            <button class="q-opt single" data-step="3" data-val="no" data-i18n="q3_o2">Нет</button>
+            <button class="q-opt single" data-step="3" data-val="plan" data-i18n="q3_o3">Планирую подать</button>
           </div>
           <div class="q-nav">
             <button type="button" class="q-btn-back" onclick="prevStep()" data-i18n="q_back">Назад</button>
@@ -442,10 +443,10 @@
           <h3 data-i18n="q4_h">Что сейчас беспокоит больше всего?</h3>
           <p class="q-hint" data-i18n="q4_hint">Можно выбрать несколько</p>
           <div class="q-options">
-            <button class="q-opt multi" data-step="4" data-val="fines" data-i18n="q4_o1">Риск крупных штрафов</button>
-            <button class="q-opt multi" data-step="4" data-val="docs" data-i18n="q4_o2">Документы и договоры</button>
-            <button class="q-opt multi" data-step="4" data-val="staff" data-i18n="q4_o3">Кадровые вопросы</button>
-            <button class="q-opt multi" data-step="4" data-val="labor" data-i18n="q4_o4">Трудовые споры</button>
+            <button class="q-opt multi" data-step="4" data-val="credit_yes" data-i18n="q4_o1">Да, есть действующие кредиты</button>
+            <button class="q-opt multi" data-step="4" data-val="overdue" data-i18n="q4_o2">Да, есть просрочки</button>
+            <button class="q-opt multi" data-step="4" data-val="no_credits" data-i18n="q4_o3">Нет, кредитов нет</button>
+            <button class="q-opt multi" data-step="4" data-val="consult" data-i18n="q4_o4">Нужна консультация по этому вопросу</button>
           </div>
           <div class="q-nav">
             <button type="button" class="q-btn-back" onclick="prevStep()" data-i18n="q_back">Назад</button>

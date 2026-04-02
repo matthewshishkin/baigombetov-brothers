@@ -3001,6 +3001,11 @@ blockquote {
   animation: quizFieldShake 320ms ease-in-out, quizFieldBorderPulse 680ms ease-in-out;
 }
 
+/* Phone limit feedback (when user tries to type extra digits) */
+.quiz-field-limit {
+  animation: quizFieldShake 320ms ease-in-out, quizFieldBorderPulse 680ms ease-in-out;
+}
+
 @keyframes quizOptionBorderPulse {
   0%, 100% { border-color: rgba(0, 0, 0, 0.22); }
   45% { border-color: #7B1A2B; }
