@@ -13,7 +13,7 @@
       lang_toggle_to_ru: 'Орыс тіліне ауыстыру',
 
       hero_title_main:
-        '<span class="title-desktop-only">Законно вернем ваши деньги за 2-3 месяца,<br>даже если вы уже подавали заявление в полицию</span><span class="title-mobile-only">Законно вернем ваши<br>деньги за 2-3 месяца,<br>даже если вы уже<br>подавали заявление<br>в полицию</span>',
+        '<span class="title-desktop-only">Законно вернем ваши деньги за 3-4 месяца,<br>даже если вы уже подавали заявление в полицию</span><span class="title-mobile-only">Законно вернем ваши<br>деньги за 3-4 месяца,<br>даже если вы уже<br>подавали заявление<br>в полицию</span>',
       hero_sub1: 'Привлечем к&nbsp;<span class="hero-pill-emph">уголовной ответственности</span>',
       hero_sub2: 'до&nbsp;<span class="hero-pill-emph">100%</span>&nbsp;суммы ущерба&nbsp;+ расходы на юриста',
       hero_sub3: '<span class="hero-pill-emph">154</span>&nbsp;жертвы получили возврат средств',
@@ -172,7 +172,7 @@
       legit_cap_22: 'Сертификат №1',
 
       cta_h2:
-        '<span class="cta-title-text"><span class="title-desktop-only">Законно вернем ваши деньги за 2-3 месяца,<br>даже если вы уже подавали заявление в полицию</span><span class="title-mobile-only">Законно вернем ваши<br>деньги за 2-3 месяца,<br>даже если вы уже<br>подавали заявление<br>в полицию</span></span>',
+        '<span class="cta-title-text"><span class="title-desktop-only">Законно вернем ваши деньги за 3-4 месяца,<br>даже если вы уже подавали заявление в полицию</span><span class="title-mobile-only">Законно вернем ваши<br>деньги за 3-4 месяца,<br>даже если вы уже<br>подавали заявление<br>в полицию</span></span>',
       cta_sub:
         'Ответьте на несколько вопросов и получите бесплатную консультацию с четким прогнозом по вашему делу',
       cta_btn: 'Вернуть средства',
@@ -249,7 +249,7 @@
       lang_toggle_to_ru: 'Орыс тіліне ауыстыру',
 
       hero_title_main:
-        '<span class="title-desktop-only">Ақшаңызды 2-3 айда заңды түрде қайтарамыз,<br>тіпті полицияға арыз берсеңіз де</span><span class="title-mobile-only">Ақшаңызды 2-3 айда<br>заңды түрде қайтарамыз,<br>тіпті сіз бұған дейін<br>полицияға арыз<br>берсеңіз де</span>',
+        '<span class="title-desktop-only">Ақшаңызды 3-4 айда заңды түрде қайтарамыз,<br>тіпті полицияға арыз берсеңіз де</span><span class="title-mobile-only">Ақшаңызды 3-4 айда<br>заңды түрде қайтарамыз,<br>тіпті сіз бұған дейін<br>полицияға арыз<br>берсеңіз де</span>',
       hero_sub1: 'Сізді <span class="hero-pill-emph">қылмыстық жауапкершілікке</span> тартуға көмектесеміз',
       hero_sub2: 'залалдың&nbsp;<span class="hero-pill-emph">100%</span>-ына дейін&nbsp;+ заңгер шығыны',
       hero_sub3: '<span class="hero-pill-emph">154</span>&nbsp;жәбірленуші қаражатын қайтарды',
@@ -414,7 +414,7 @@
       legit_cap_22: 'Сертификат №1',
 
       cta_h2:
-        '<span class="cta-title-text"><span class="title-desktop-only">Ақшаңызды 2-3 айда заңды түрде қайтарамыз,<br>тіпті полицияға арыз берсеңіз де</span><span class="title-mobile-only">Ақшаңызды 2-3 айда<br>заңды түрде қайтарамыз,<br>тіпті сіз бұған дейін<br>полицияға арыз<br>берсеңіз де</span></span>',
+        '<span class="cta-title-text"><span class="title-desktop-only">Ақшаңызды 3-4 айда заңды түрде қайтарамыз,<br>тіпті полицияға арыз берсеңіз де</span><span class="title-mobile-only">Ақшаңызды 3-4 айда<br>заңды түрде қайтарамыз,<br>тіпті сіз бұған дейін<br>полицияға арыз<br>берсеңіз де</span></span>',
       cta_sub:
         'Бірнеше сұраққа жауап беріңіз және ісіңіз бойынша нақты болжамы бар тегін кеңес алыңыз',
       cta_btn: 'Қаражатты қайтару',
