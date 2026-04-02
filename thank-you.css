@@ -63,18 +63,18 @@ body {
   transform: none !important;
 }
 
-/* На "спасибо" показываем галочку текстом (иконка-файл может не доехать в деплой) */
+/* На "спасибо" рисуем галочку как SVG, без зависимости от файлов в деплое */
 .thankyou-page .success-check {
   width: 44px;
   height: 44px;
-  display: grid;
-  place-items: center;
-  font-size: 28px;
-  line-height: 1;
-  font-weight: 700;
-  color: #2563eb; /* синяя галочка */
-  background: rgba(37, 99, 235, 0.12);
+  display: block;
   border-radius: 999px;
-  background-image: none !important;
+  background-color: rgba(37, 99, 235, 0.12);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 26px 26px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%232563eb' d='M9.0 16.2 4.8 12 3.4 13.4 9.0 19 21 7 19.6 5.6z'/%3E%3C/svg%3E");
   margin: 0;
+  font-size: 0;
+  color: transparent;
 }
