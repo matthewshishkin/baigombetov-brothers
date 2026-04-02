@@ -273,6 +273,8 @@ h3 { font-weight: normal; font-size: 1.05rem; }
 .btn-header.btn-header--solid {
   background: #722f37;
   color: #fff;
+  /* В состоянии заливки рамку не показываем */
+  box-shadow: none;
   /* убираем обводку, чтобы осталась только заливка */
   border-color: transparent;
   transition:
