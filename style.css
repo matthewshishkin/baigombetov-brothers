@@ -241,6 +241,27 @@ h3 { font-weight: normal; font-size: 1.05rem; }
   .header-logo {
     font-size: 0.66rem;
     gap: 6px;
+    /* На мобиле при переносе текста flex часто визуально «плывёт» относительно иконки.
+       Сетка + центрирование по строке совпадает с десктопным выравниванием по середине. */
+    display: grid;
+    grid-template-columns: 1.8em minmax(0, 1fr);
+    align-items: center;
+    column-gap: 6px;
+  }
+
+  .header-logo-img {
+    grid-column: 1;
+    grid-row: 1;
+    align-self: center;
+    justify-self: center;
+  }
+
+  .header-logo > span:not(.header-logo-img) {
+    grid-column: 2;
+    grid-row: 1;
+    align-self: center;
+    transform: none;
+    line-height: 1.05;
   }
 }
 .btn-header {
