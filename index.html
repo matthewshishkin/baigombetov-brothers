@@ -42,9 +42,17 @@
   <!-- ║        БЛОК 1: HERO          ║ -->
   <!-- ╚══════════════════════════════╝ -->
   <section class="hero hero--video" id="hero">
-    <!-- Фоновое изображение (вместо видео) -->
-    <img class="hero-video hero-video--a" src="/cr4.jpg" alt="" aria-hidden="true" />
-    <img class="hero-video hero-video--b" src="/cr5.png" alt="" aria-hidden="true" />
+    <!-- Hero video background -->
+    <video
+      class="hero-video hero-video--single"
+      src="/hero.mp4"
+      autoplay
+      muted
+      playsinline
+      loop
+      preload="auto"
+      aria-hidden="true"
+    ></video>
     <!-- Тёмный оверлей + шум -->
     <div class="hero-overlay"></div>
     <!-- Контент -->
