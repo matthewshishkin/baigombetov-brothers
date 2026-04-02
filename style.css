@@ -1578,7 +1578,7 @@ blockquote {
   margin-top: -2px;
 }
 .certs-dots {
-  display: none;
+  display: flex;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
@@ -1586,8 +1586,8 @@ blockquote {
   margin-top: 22px;
 }
 .certs-dot {
-  width: 9px;
-  height: 9px;
+  width: 6px;
+  height: 6px;
   padding: 0;
   border: none;
   border-radius: 50%;
