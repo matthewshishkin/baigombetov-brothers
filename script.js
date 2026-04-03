@@ -916,6 +916,10 @@ function quizApplyDraft() {
     Object.keys(answers).forEach((k) => delete answers[k]);
     const saved = data.answers;
     if (saved && typeof saved === 'object') Object.assign(answers, saved);
+    // Шаг 4: раньше был мультивыбор — оставляем один ответ для совместимости с черновиками
+    if (Array.isArray(answers[4]) && answers[4].length) {
+      answers[4] = answers[4][0];
+    }
     quizApplySelectedFromAnswers();
 
     const form = document.querySelector('.q-contact-form');
@@ -1654,27 +1658,6 @@ document.addEventListener('DOMContentLoaded', () => {
       const step = btn.dataset.step;
       const val = btn.dataset.val;
 
-      // Шаг 4: если выбран последний вариант — остальные нельзя выбрать
-      if (step === '4') {
-        const LAST_VAL = 'consult';
-        const all = Array.from(document.querySelectorAll('.q-opt.multi[data-step="4"]'));
-        const lastBtn = all.find((b) => b.dataset.val === LAST_VAL);
-        const others = all.filter((b) => b !== lastBtn);
-
-        const lastSelected = !!(lastBtn && lastBtn.classList.contains('selected'));
-        const isLastClick = String(val) === LAST_VAL;
-        const willSelectLast = isLastClick && !btn.classList.contains('selected');
-
-        // Если последний уже выбран — не даём выбирать другие
-        if (!isLastClick && lastSelected) return;
-
-        // Если выбираем последний — снимаем выбор с остальных
-        if (willSelectLast) {
-          others.forEach((b) => b.classList.remove('selected'));
-          answers[step] = [];
-        }
-      }
-
       // Шаг 3: если выбран любой из первых трех вариантов — «Свой вариант» недоступен
       if (step === '3') {
         const firstVals = ['san_tax', 'suppliers', 'guests_hr'];
@@ -1697,19 +1680,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!answers[step].includes(val)) answers[step].push(val);
       } else {
         answers[step] = answers[step].filter(v => v !== val);
-      }
-
-      // Шаг 4: обновляем disabled-стейты в зависимости от выбранного последнего варианта
-      if (step === '4') {
-        const LAST_VAL = 'consult';
-        const all = Array.from(document.querySelectorAll('.q-opt.multi[data-step="4"]'));
-        const lastBtn = all.find((b) => b.dataset.val === LAST_VAL);
-        const others = all.filter((b) => b !== lastBtn);
-        const lastSelected = !!(lastBtn && lastBtn.classList.contains('selected'));
-        others.forEach((b) => {
-          b.disabled = lastSelected;
-          b.setAttribute('aria-disabled', lastSelected ? 'true' : 'false');
-        });
       }
 
       if (step === '3') {

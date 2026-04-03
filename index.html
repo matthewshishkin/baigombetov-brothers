@@ -13,7 +13,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=264" />
+  <link rel="stylesheet" href="style.css?v=265" />
 </head>
 <body>
   <div id="siteLoadingOverlay" class="site-loading-overlay" aria-hidden="true">
@@ -59,12 +59,12 @@
     <div class="container hero-content-wrap">
       <div class="hero-content">
         <h1 class="hero-title">
-          <span data-i18n="hero_title_main" data-i18n-html="true"><span class="title-desktop-only">Экономим ресторанам и отелям от 10,000,000 тенге<br>на штрафах инспекций и договорах с поставщиками</span><span class="title-mobile-only">Экономим деньги<br>ресторанам и отелям<br>от 10,000,000 тенге<br>на штрафах инспекций<br>и договорах с поставщиками</span></span>
+          <span data-i18n="hero_title_main" data-i18n-html="true"><span class="title-desktop-only">Вернем ваши деньги за 3-4 месяца от мошенников,<br>даже если вы уже подавали заявление в полицию</span><span class="title-mobile-only">Вернем ваши<br>деньги за 3-4 месяца<br>от мошенников,<br>даже если вы уже<br>подавали заявление<br>в полицию</span></span>
         </h1>
         <div class="hero-subtitle">
           <span class="hero-pill" data-i18n="hero_sub1" data-i18n-html="true">С учётом законодательства 2026 года</span>
           <span class="hero-pill" data-i18n="hero_sub2" data-i18n-html="true">Даже если у вас уже есть юрист</span>
-          <span class="hero-pill" data-i18n="hero_sub3" data-i18n-html="true">За 2 недели</span>
+          <span class="hero-pill" data-i18n="hero_sub3" data-i18n-html="true"><span class="hero-pill-emph">154</span>&nbsp;человека получили возврат средств</span>
         </div>
         <button class="btn hero-btn" type="button" onclick="openModal()" data-i18n="hero_btn" data-i18n-html="true"><span class="hero-btn-text">Выявить риски</span></button>
       </div>
@@ -439,7 +439,7 @@
   <section class="section cta-section">
     <div class="container cta-inner">
       <div class="cta-content">
-        <h2 class="cta-anim" data-i18n="cta_h2" data-i18n-html="true"><span class="cta-title-text"><span class="title-desktop-only">Экономим ресторанам и отелям от 10,000,000 тенге<br>на штрафах инспекций и договорах с поставщиками</span><span class="title-mobile-only">Экономим деньги<br>ресторанам и отелям<br>от 10,000,000 тенге<br>на штрафах инспекций<br>и договорах с поставщиками</span></span></h2>
+        <h2 class="cta-anim" data-i18n="cta_h2" data-i18n-html="true"><span class="cta-title-text"><span class="title-desktop-only">Вернем ваши деньги за 3-4 месяца от мошенников,<br>даже если вы уже подавали заявление в полицию</span><span class="title-mobile-only">Вернем ваши<br>деньги за 3-4 месяца<br>от мошенников,<br>даже если вы уже<br>подавали заявление<br>в полицию</span></span></h2>
         <p class="cta-sub cta-anim" data-i18n="cta_sub">За 30 минут на консультации вы получите разбор текущих рисков вашей клиники, которые могут подкрасться уже завтра, жмите на кнопку:</p>
         <button class="btn hero-btn" type="button" onclick="openModal()" data-i18n="cta_btn">Выявить риски</button>
 
@@ -547,13 +547,13 @@
 
         <!-- Шаг 4 -->
         <div class="q-step" id="step4">
-          <h3 data-i18n="q4_h">Что сейчас беспокоит больше всего?</h3>
-          <p class="q-hint" data-i18n="q4_hint">Можно выбрать несколько</p>
+          <h3 data-i18n="q4_h">Есть ли кредиты, взятые из-за мошенников?</h3>
+          <p class="q-hint" data-i18n="q4_hint">Выберите 1 вариант</p>
           <div class="q-options">
-            <button class="q-opt multi" data-step="4" data-val="credit_yes" data-i18n="q4_o1">Да, есть действующие кредиты</button>
-            <button class="q-opt multi" data-step="4" data-val="overdue" data-i18n="q4_o2">Да, есть просрочки</button>
-            <button class="q-opt multi" data-step="4" data-val="no_credits" data-i18n="q4_o3">Нет, кредитов нет</button>
-            <button class="q-opt multi" data-step="4" data-val="consult" data-i18n="q4_o4">Нужна консультация по этому вопросу</button>
+            <button class="q-opt single" data-step="4" data-val="credit_yes" data-i18n="q4_o1">Да, есть действующие кредиты</button>
+            <button class="q-opt single" data-step="4" data-val="overdue" data-i18n="q4_o2">Да, есть просрочки</button>
+            <button class="q-opt single" data-step="4" data-val="no_credits" data-i18n="q4_o3">Нет, кредитов нет</button>
+            <button class="q-opt single" data-step="4" data-val="consult" data-i18n="q4_o4">Нужна консультация по этому вопросу</button>
           </div>
           <div class="q-nav">
             <button type="button" class="q-btn-back" onclick="prevStep()" data-i18n="q_back">Назад</button>
@@ -653,7 +653,7 @@
     })();
   </script>
 
-  <script src="i18n.js?v=44"></script>
-  <script src="script.js?v=101"></script>
+  <script src="i18n.js?v=45"></script>
+  <script src="script.js?v=102"></script>
 </body>
 </html>

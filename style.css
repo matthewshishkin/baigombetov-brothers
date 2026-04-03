@@ -507,10 +507,27 @@ h3 { font-weight: normal; font-size: 1.05rem; }
   transition: background 0.22s ease, color 0.22s ease;
 }
 
-/* Только hero-кнопке нужен контекст для shimmer-рамки */
+/* Только hero-кнопке нужен контекст для позиционирования */
 .hero--video .hero-btn {
   position: absolute;
-  overflow: hidden;
+  overflow: visible;
+  /* Как кнопка в последнем блоке (.cta-section .hero-btn) */
+  background: var(--blue);
+  color: #fff;
+  border: 0.75px solid var(--blue);
+  box-shadow:
+    0 10px 32px rgba(123, 26, 43, 0.35),
+    0 4px 14px rgba(123, 26, 43, 0.28);
+}
+.hero--video .hero-btn::before {
+  display: none;
+}
+.hero--video .hero-btn .hero-btn-text {
+  color: #fff;
+  -webkit-text-fill-color: #fff;
+  background: none !important;
+  background-image: none !important;
+  animation: none !important;
 }
 
 .hero-btn-text {
@@ -547,44 +564,23 @@ h3 { font-weight: normal; font-size: 1.05rem; }
     -webkit-text-fill-color: transparent;
     animation: heroBtnSheen 3.4s linear infinite;
   }
+
+  .hero--video .hero-btn .hero-btn-text {
+    background-image: none;
+    -webkit-background-clip: unset;
+    background-clip: unset;
+    -webkit-text-fill-color: #fff;
+    animation: none;
+  }
 }
 
-/* Обводка hero-кнопки: тот же shimmer, синхронно с текстом */
-.hero--video .hero-btn::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  padding: 0.5px;
-  pointer-events: none;
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.68), rgba(255, 255, 255, 0.68)),
-    linear-gradient(
-      90deg,
-      rgba(255, 255, 255, 0) 0%,
-      rgba(255, 255, 255, 0) 35%,
-      rgba(255, 255, 255, 0.22) 42%,
-      rgba(255, 255, 255, 1) 50%,
-      rgba(255, 255, 255, 0.22) 58%,
-      rgba(255, 255, 255, 0) 65%,
-      rgba(255, 255, 255, 0) 100%
-    );
-  background-size: 100% 100%, 240% 100%;
-  background-repeat: no-repeat;
-  animation: heroBtnSheen 3.4s linear infinite;
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  transition: opacity 0.22s ease;
-}
-.hero--video .hero-btn:hover::before {
-  opacity: 0;
-}
-/* Первый блок: при наведении — бордо, белый текст */
 .hero--video .hero-btn:hover {
-  background: var(--blue);
+  background: var(--blue-dark);
   color: #fff;
-  border-color: var(--blue);
+  border-color: var(--blue-dark);
+  box-shadow:
+    0 12px 36px rgba(123, 26, 43, 0.42),
+    0 5px 16px rgba(123, 26, 43, 0.32);
 }
 
 /* Desktop: кнопка ближе к заголовку */
@@ -785,7 +781,8 @@ h3 { font-weight: normal; font-size: 1.05rem; }
   right: 0;
   bottom: 0;
   height: 84px;
-  background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0.92) 55%, rgba(255,255,255,1));
+  /* Слабее заливка снизу — текст под оверлеем читается примерно на 20% лучше */
+  background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0.72) 48%, rgba(255,255,255,0.82));
   pointer-events: none;
 }
 
@@ -918,7 +915,7 @@ h3 { font-weight: normal; font-size: 1.05rem; }
   padding: 14px 22px;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 0.80rem;
-  font-weight: 500;
+  font-weight: 700;
   cursor: pointer;
   transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
 }
@@ -3165,18 +3162,18 @@ img.protect-asset,
 @keyframes q-btn-next-pulse {
   0% {
     box-shadow:
-      0 10px 24px rgba(0, 0, 0, 0.10),
-      0 0 0 rgba(123, 26, 43, 0);
+      0 10px 24px rgba(51, 153, 0, 0.22),
+      0 0 0 rgba(51, 153, 0, 0);
   }
   50% {
     box-shadow:
-      0 12px 28px rgba(0, 0, 0, 0.14),
-      0 0 16px rgba(123, 26, 43, 0.30);
+      0 12px 28px rgba(51, 153, 0, 0.32),
+      0 0 18px rgba(51, 153, 0, 0.45);
   }
   100% {
     box-shadow:
-      0 10px 24px rgba(0, 0, 0, 0.10),
-      0 0 0 rgba(123, 26, 43, 0);
+      0 10px 24px rgba(51, 153, 0, 0.22),
+      0 0 0 rgba(51, 153, 0, 0);
   }
 }
 
@@ -3206,17 +3203,17 @@ img.protect-asset,
   color: var(--text);
 }
 
-/* Далее — только обводка + лёгкая тень; при наведении без заливки */
+/* Далее — заливка #339900 и тень в тот же зелёный */
 .q-btn-next {
   flex: 1;
   padding: 11px 18px;
-  background: transparent;
-  border: 1px solid var(--blue);
+  background: #339900;
+  border: 1px solid #339900;
   border-radius: 3px;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 0.86rem;
   font-weight: 500;
-  color: var(--blue);
+  color: #fff;
   cursor: pointer;
   transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease,
     box-shadow 0.2s ease;
@@ -3224,28 +3221,28 @@ img.protect-asset,
   animation: q-btn-next-pulse 1s linear infinite;
 }
 .q-btn-next:hover {
-  background: transparent;
-  border-color: var(--blue);
-  color: var(--blue);
+  background: #339900;
+  border-color: #339900;
+  color: #fff;
   animation: none;
   box-shadow:
-    0 12px 28px rgba(0, 0, 0, 0.14),
-    0 0 16px rgba(123, 26, 43, 0.22);
+    0 12px 28px rgba(51, 153, 0, 0.38),
+    0 0 18px rgba(51, 153, 0, 0.42);
 }
 .q-btn-next:active {
-  background: transparent;
-  border-color: var(--blue);
-  color: var(--blue);
+  background: #2d8500;
+  border-color: #2d8500;
+  color: #fff;
   animation: none;
   box-shadow:
-    0 8px 18px rgba(0, 0, 0, 0.12),
-    0 0 10px rgba(123, 26, 43, 0.14);
+    0 8px 18px rgba(51, 153, 0, 0.32),
+    0 0 12px rgba(51, 153, 0, 0.35);
 }
 
 @media (prefers-reduced-motion: reduce) {
   .q-btn-next {
     animation: none;
-    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.10);
+    box-shadow: 0 10px 24px rgba(51, 153, 0, 0.28);
   }
 }
 
@@ -3782,6 +3779,11 @@ a.q-submit-btn {
   }
   .hero--video .hero-content {
     margin-top: 52px;
+  }
+  /* CTA первого блока выше примерно на высоту кнопки */
+  .hero--video .hero-btn {
+    position: relative;
+    top: -56px;
   }
   .hero-video       { object-position: 52% center; } /* ещё вправо на 10% */
   .risk-cards       { grid-template-columns: 1fr; }
