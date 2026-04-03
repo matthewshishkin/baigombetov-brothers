@@ -13,7 +13,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=276" />
+  <link rel="stylesheet" href="style.css?v=277" />
 </head>
 <body>
   <div id="siteLoadingOverlay" class="site-loading-overlay" aria-hidden="true">
@@ -246,14 +246,45 @@
   </section>
 
   <!-- ╔══════════════════════════════╗ -->
-  <!-- ║  БЛОК: НАША КОМАНДА          ║ -->
+  <!-- ║  БЛОК: СО-ОСНОВАТЕЛИ        ║ -->
   <!-- ╚══════════════════════════════╝ -->
-  <section class="section team-section">
+  <section class="section founders-section" id="founders">
     <div class="container">
-      <h2 class="section-title" data-i18n="team_h2">Наша команда</h2>
-    </div>
-    <div class="team-photo-wrap">
-      <img src="./team-photo.png?v=3" alt="Наша команда" class="team-photo protect-asset" loading="eager" fetchpriority="high" draggable="false" data-i18n-alt="team_alt" />
+      <h2 class="section-title" data-i18n="founders_h2">Со-основатели</h2>
+      <div class="founders-grid" role="list">
+        <article class="founder-card" role="listitem">
+          <div class="founder-avatar-wrap">
+            <img
+              src="./founders-duo.png?v=1"
+              alt=""
+              class="founder-avatar founder-avatar--left protect-asset"
+              width="1024"
+              height="824"
+              loading="lazy"
+              draggable="false"
+              data-i18n-alt="founders_alt_1"
+            />
+          </div>
+          <p class="founder-role" data-i18n="founders_role">Со-основатель</p>
+          <p class="founder-name" data-i18n="founders_name_1">Берик Байгомбетов</p>
+        </article>
+        <article class="founder-card" role="listitem">
+          <div class="founder-avatar-wrap">
+            <img
+              src="./founders-duo.png?v=1"
+              alt=""
+              class="founder-avatar founder-avatar--right protect-asset"
+              width="1024"
+              height="824"
+              loading="lazy"
+              draggable="false"
+              data-i18n-alt="founders_alt_2"
+            />
+          </div>
+          <p class="founder-role" data-i18n="founders_role">Со-основатель</p>
+          <p class="founder-name" data-i18n="founders_name_2">Бауыржан Байгомбетов</p>
+        </article>
+      </div>
     </div>
   </section>
 
@@ -653,7 +684,7 @@
     })();
   </script>
 
-  <script src="i18n.js?v=51"></script>
+  <script src="i18n.js?v=52"></script>
   <script src="script.js?v=102"></script>
 </body>
 </html>
