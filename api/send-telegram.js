@@ -120,9 +120,9 @@ function buildMessageHtml({ text, utm, totalLeadNo, perAdLeadNo, adName }) {
   if (adName) {
     const safeName = escapeHtml(adName);
     if (typeof perAdLeadNo === 'number') {
-      blocks.push(`По Ad ID &quot;${safeName}&quot; получено: ${pluralLeadsRu(perAdLeadNo)}`);
+      blocks.push(`От крео &quot;${safeName}&quot;: ${pluralLeadsRu(perAdLeadNo)}`);
     } else {
-      blocks.push(`По Ad ID &quot;${safeName}&quot; получено: —`);
+      blocks.push(`От крео &quot;${safeName}&quot;: —`);
     }
   }
   blocks.push('');
