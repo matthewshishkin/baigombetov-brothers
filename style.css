@@ -453,7 +453,7 @@ h3 { font-weight: normal; font-size: 1.05rem; }
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 11px;
+  gap: 10px;
   margin-top: -18px;
   margin-bottom: 26px;
 }
@@ -462,15 +462,15 @@ h3 { font-weight: normal; font-size: 1.05rem; }
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 11px 15px;
-  border-radius: 3px;
+  padding: 10px 14px;
+  border-radius: 3px; /* как у кнопок */
   background: rgba(255, 255, 255, 0.09); /* стеклянная заливка (чуть прозрачнее) */
   border: none;
-  backdrop-filter: blur(11px);
-  -webkit-backdrop-filter: blur(11px);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   color: #fff;
   font-family: 'Inter', Arial, Helvetica, sans-serif; /* другой шрифт */
-  font-size: 1.012rem;
+  font-size: 0.92rem;
   font-weight: 300;
   line-height: 1.2;
   box-shadow: none;
@@ -2548,8 +2548,8 @@ img.protect-asset,
 /* CTA на десктопе: как блок 1 (hero) — по центру, на высоту экрана, белый фон; кнопка — без изменений (правила .cta-section .hero-btn выше) */
 @media (min-width: 961px) {
   .hero-pill {
-    padding: 9px 12px;
-    font-size: 0.814rem;
+    padding: 8px 11px;
+    font-size: 0.74rem;
   }
 
   .title-desktop-only {
@@ -3893,7 +3893,10 @@ a.q-submit-btn {
     margin-right: 0;
     margin-top: -10px;
     margin-bottom: 18px;
+    /* +10% к зазору только на мобиле (см. базовые 10px у .hero-subtitle) */
+    gap: 11px;
   }
+  /* Плашки крупнее только на мобиле (+10% к прежним мобильным размерам) */
   .hero-pill {
     border: none;
     padding: 8px 11px;
