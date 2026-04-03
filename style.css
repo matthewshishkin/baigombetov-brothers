@@ -3787,11 +3787,6 @@ a.q-submit-btn {
   .hero--video .hero-content {
     margin-top: 52px;
   }
-  /* CTA первого блока выше примерно на высоту кнопки */
-  .hero--video .hero-btn {
-    position: relative;
-    top: -56px;
-  }
   .hero-video       { object-position: 52% center; } /* ещё вправо на 10% */
   .risk-cards       { grid-template-columns: 1fr; }
   .partners-grid    { grid-template-columns: 1fr 1fr; }
@@ -3897,15 +3892,18 @@ a.q-submit-btn {
     font-weight: 500;
   }
 
-  /* Кнопка в самый низ блока */
+  /* Кнопка внизу блока; только bottom (без top), иначе кнопка растягивается на весь экран */
   .hero--video .hero-btn {
     position: absolute;
+    top: auto;
     left: 24px;
     right: 24px;
     transform: none;
-    bottom: 128px;
+    /* было 128px — подняли на ~высоту кнопки без конфликта top/bottom */
+    bottom: calc(128px + 56px);
     margin-top: 0;
     width: auto;
+    height: auto;
     display: block;
     text-align: center;
     padding: 16px 24px;
