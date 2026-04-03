@@ -1405,7 +1405,7 @@ blockquote {
   margin-inline: auto;
 }
 
-/* Блок «Со-основатели» — как макет: одна колонка, круг + «Со-основатель» (serif) + имя (sans), чёрный текст */
+/* Блок «Основатели фирмы» — одна колонка, круг + роль (serif) + имя (sans), чёрный текст */
 .section.founders-section {
   padding-bottom: 64px;
   overflow-x: hidden;
