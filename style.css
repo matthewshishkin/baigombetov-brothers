@@ -407,7 +407,7 @@ h3 { font-weight: normal; font-size: 1.05rem; }
 .hero-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.455);
+  background: rgba(0, 0, 0, 0.52);
   z-index: 1;
 }
 
@@ -2273,31 +2273,30 @@ blockquote {
   animation: none;
 }
 
-/* «С нами»: кнопка без заливки, только обводка; без анимации */
+/* «Работа с нашей командой»: как кнопка в последнем блоке (.cta-section .hero-btn) */
 .tariff-card--filled .tariff-btn--filled {
-  background: #fff;
-  color: #000;
-  border: 0.75px solid #fff;
-  animation: none;
+  background: var(--blue);
+  color: #fff;
+  border: 0.75px solid var(--blue);
   box-shadow:
-    0 10px 32px rgba(0, 0, 0, 0.24),
-    0 4px 14px rgba(0, 0, 0, 0.16);
-  transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
-}
-
-/* “Работа с нашей командой” CTA shake */
-.tariff-card--filled .tariff-btn--filled {
+    0 10px 32px rgba(123, 26, 43, 0.35),
+    0 4px 14px rgba(123, 26, 43, 0.28);
+  transition:
+    background 0.22s ease,
+    color 0.22s ease,
+    border-color 0.22s ease,
+    box-shadow 0.22s ease;
   animation: heroCtaShake 2.5s ease-in-out infinite;
   will-change: transform;
 }
 
 .tariff-card--filled .tariff-btn--filled:hover {
-  background: #f5f5f5;
-  color: #000;
-  border-color: #fff;
+  background: var(--blue-dark);
+  color: #fff;
+  border-color: var(--blue-dark);
   box-shadow:
-    0 12px 36px rgba(0, 0, 0, 0.28),
-    0 5px 16px rgba(0, 0, 0, 0.18);
+    0 12px 36px rgba(123, 26, 43, 0.42),
+    0 5px 16px rgba(123, 26, 43, 0.32);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -2341,22 +2340,22 @@ blockquote {
   .tariff-card--filled .tariff-btn--filled {
     animation: none !important;
     transform: none;
-    background: #fff;
-    color: #000;
-    border-color: #fff;
+    background: var(--blue);
+    color: #fff;
+    border-color: var(--blue);
   }
 }
 
 .tariff-btn--filled {
-  background: #fff;
-  color: #000;
-  border: 0.75px solid #fff;
+  background: var(--blue);
+  color: #fff;
+  border: 0.75px solid var(--blue);
 }
 
 .tariff-btn--filled:hover {
-  background: #f5f5f5;
-  color: #000;
-  border-color: #fff;
+  background: var(--blue-dark);
+  color: #fff;
+  border-color: var(--blue-dark);
 }
 
 /* =============================================
