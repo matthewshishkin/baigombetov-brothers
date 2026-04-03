@@ -3246,17 +3246,21 @@ img.protect-asset,
   }
 }
 
-/* Submit на шаге 5 (ссылка на WhatsApp — как кнопка) */
+/* Submit («Выявить риски») — те же настройки, что у «Далее» (.q-btn-next) */
 .q-submit-btn {
   flex: 2;
   padding: 11px 18px;
-  background: var(--blue);
-  border: 1.5px solid var(--blue);
+  background: #339900;
+  border: 1px solid #339900;
+  border-radius: 3px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.86rem;
+  font-weight: 500;
   color: #fff;
-  box-shadow:
-    0 10px 24px rgba(0, 0, 0, 0.14),
-    0 2px 8px rgba(0, 0, 0, 0.10);
-  transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease,
+    box-shadow 0.2s ease;
+  text-align: center;
   animation: q-btn-next-pulse 1s linear infinite;
 }
 a.q-submit-btn {
@@ -3266,26 +3270,29 @@ a.q-submit-btn {
   cursor: pointer;
 }
 .q-submit-btn:hover {
-  background: #6a1324;
-  border-color: #6a1324;
+  background: #339900;
+  border-color: #339900;
+  color: #fff;
   animation: none;
   box-shadow:
-    0 12px 28px rgba(0, 0, 0, 0.16),
-    0 0 16px rgba(123, 26, 43, 0.22);
+    0 12px 28px rgba(51, 153, 0, 0.38),
+    0 0 18px rgba(51, 153, 0, 0.42);
 }
 
 .q-submit-btn:active {
-  background: #5a0f1e;
-  border-color: #5a0f1e;
+  background: #2d8500;
+  border-color: #2d8500;
+  color: #fff;
   animation: none;
   box-shadow:
-    0 8px 18px rgba(0, 0, 0, 0.14),
-    0 0 10px rgba(123, 26, 43, 0.14);
+    0 8px 18px rgba(51, 153, 0, 0.32),
+    0 0 12px rgba(51, 153, 0, 0.35);
 }
 
 @media (prefers-reduced-motion: reduce) {
   .q-submit-btn {
     animation: none;
+    box-shadow: 0 10px 24px rgba(51, 153, 0, 0.28);
   }
 }
 
