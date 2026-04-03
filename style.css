@@ -1442,7 +1442,7 @@ blockquote {
 .founder-avatar {
   position: absolute;
   inset: 0;
-  width: 260%;
+  width: 240%;
   height: 100%;
   max-width: none;
   object-fit: cover;
@@ -1450,15 +1450,17 @@ blockquote {
   pointer-events: none;
   user-select: none;
 }
-.founder-avatar--left {
-  left: 50%;
-  transform: translateX(-50%);
-  object-position: 26% 38%;
-}
+/* Первый круг — фигура справа на дуо: сильный сдвиг влево, лицо по центру */
 .founder-avatar--right {
   left: 50%;
   transform: translateX(-50%);
-  object-position: 74% 38%;
+  object-position: 36% 35%;
+}
+/* Второй круг — фигура слева на дуо: сильный сдвиг вправо, лицо по центру */
+.founder-avatar--left {
+  left: 50%;
+  transform: translateX(-50%);
+  object-position: 72% 35%;
 }
 .founder-role {
   font-family: var(--font-heading, 'Playfair Display', Georgia, serif);
