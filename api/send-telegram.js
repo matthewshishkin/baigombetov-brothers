@@ -98,13 +98,14 @@ function buildUtmSpoilerHtml(utm) {
   if (utm.utm_content) lines.push(`utm_content: ${utm.utm_content}`);
   if (utm.utm_term) lines.push(`utm_term: ${utm.utm_term}`);
   if (lines.length <= 1) return '';
-  const inner = lines.map((line) => escapeHtml(line)).join('<br>');
+  /* В HTML-режиме Telegram тег <br> не поддерживается — только \n */
+  const inner = lines.map((line) => escapeHtml(line)).join('\n');
   return `<tg-spoiler>${inner}</tg-spoiler>`;
 }
 
-/** Тело заявки: переводы \n → <br>, экранирование HTML */
-function bodyToHtml(plain) {
-  return escapeHtml(plain).replace(/\r\n/g, '\n').replace(/\n/g, '<br>');
+/** Тело заявки: экранирование HTML; переносы строк — \n (не <br>) */
+function bodyToTelegramHtml(plain) {
+  return escapeHtml(plain).replace(/\r\n/g, '\n');
 }
 
 function buildMessageHtml({ text, utm, totalLeadNo, perAdLeadNo, adName }) {
@@ -130,8 +131,8 @@ function buildMessageHtml({ text, utm, totalLeadNo, perAdLeadNo, adName }) {
     blocks.push(spoiler);
     blocks.push('');
   }
-  blocks.push(bodyToHtml(text));
-  return blocks.join('<br>');
+  blocks.push(bodyToTelegramHtml(text));
+  return blocks.join('\n');
 }
 
 async function handler(req, res) {
