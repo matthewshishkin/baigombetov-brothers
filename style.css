@@ -3552,8 +3552,10 @@ a.q-submit-btn {
   background-position: center;
   flex-shrink: 0;
   font-size: 0;
+  line-height: 0;
   color: transparent;
   margin-top: 0;
+  overflow: hidden;
 }
 .quiz-success-copy h3 { font-size: 1.95rem; margin-bottom: 6px; color: #000; text-align: center; }
 .quiz-success-copy p  { color: var(--muted); margin-bottom: 0; text-align: center; }

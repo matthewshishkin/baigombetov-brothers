@@ -18,7 +18,7 @@ body {
   box-shadow: 0 28px 80px rgba(0, 0, 0, 0.22);
   text-align: center;
 }
-/* Иконка галочки — берётся из style.css (success-check). */
+/* Иконка галочки — тот же PNG, что и у экрана «спасибо» в квизе (style.css .success-check). */
 .ty-card h1 {
   margin: 0 0 6px;
   font-size: 1.95rem;
@@ -63,7 +63,7 @@ body {
   transform: none !important;
 }
 
-/* На "спасибо" рисуем галочку как SVG, без зависимости от файлов в деплое */
+/* Страницы thank-you.html / thank-you-kk.html — та же PNG-галочка, что на основном сайте */
 .thankyou-page .success-check {
   width: 44px;
   height: 44px;
@@ -72,9 +72,12 @@ body {
   background-color: rgba(37, 99, 235, 0.12);
   background-repeat: no-repeat;
   background-position: center;
-  background-size: 26px 26px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%232563eb' d='M9.0 16.2 4.8 12 3.4 13.4 9.0 19 21 7 19.6 5.6z'/%3E%3C/svg%3E");
+  background-size: contain;
+  background-image: url('png-klev-club-gw6q-p-galochka-insta-png-17.png');
   margin: 0;
   font-size: 0;
+  line-height: 0;
   color: transparent;
+  overflow: hidden;
+  text-indent: -9999px;
 }
