@@ -180,7 +180,7 @@
       cta_btn: 'Вернуть средства',
       cta_img_alt: 'Юрист компании',
       cta_privacy_html:
-        '<a href="privacy.html" class="cta-privacy-link">Политика конфиденциальности</a>',
+        '<a href="privacy.html" class="cta-privacy-link">Политика конфиденциальности</a><a href="personal-data.html" class="cta-privacy-link">Согласие на обработку персональных данных</a>',
 
       quiz_aria: 'Квиз',
       quiz_close: 'Закрыть',
@@ -424,7 +424,7 @@
       cta_btn: 'Қаражатты қайтару',
       cta_img_alt: 'Компания заңгері',
       cta_privacy_html:
-        '<a href="privacy-kk.html" class="cta-privacy-link">Құпиялылық саясаты</a>',
+        '<a href="privacy-kk.html" class="cta-privacy-link">Құпиялылық саясаты</a><a href="personal-data-kk.html" class="cta-privacy-link">Жеке деректерді өңдеуге келісім</a>',
 
       quiz_aria: 'Сауалнама',
       quiz_close: 'Жабу',

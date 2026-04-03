@@ -2468,6 +2468,10 @@ blockquote {
 }
 .cta-legal-inner {
   margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
 }
 .cta-privacy-link {
   font-size: 0.68rem;
