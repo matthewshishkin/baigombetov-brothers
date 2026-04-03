@@ -1405,36 +1405,39 @@ blockquote {
   margin-inline: auto;
 }
 
-/* Блок «Со-основатели» — два круга из одного дуо-фото (object-position) */
+/* Блок «Со-основатели» — как макет: одна колонка, круг + «Со-основатель» (serif) + имя (sans), чёрный текст */
 .section.founders-section {
-  padding-bottom: 56px;
+  padding-bottom: 64px;
   overflow-x: hidden;
   background: #fff;
 }
 .founders-section .section-title {
-  margin-bottom: 40px;
+  margin-bottom: 44px;
 }
 .founders-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 48px 40px;
-  max-width: 560px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 64px;
+  max-width: 340px;
   margin: 0 auto;
-  align-items: start;
 }
 .founder-card {
   text-align: center;
+  width: 100%;
+  max-width: 100%;
 }
 .founder-avatar-wrap {
-  width: 220px;
-  height: 220px;
-  max-width: 100%;
-  margin: 0 auto 20px;
+  width: 228px;
+  height: 228px;
+  max-width: min(100%, 228px);
+  margin: 0 auto 24px;
   border-radius: 50%;
   overflow: hidden;
   border: 1px solid #000;
   background: #fff;
   position: relative;
+  flex-shrink: 0;
 }
 .founder-avatar {
   position: absolute;
@@ -1460,18 +1463,19 @@ blockquote {
 .founder-role {
   font-family: var(--font-heading, 'Playfair Display', Georgia, serif);
   font-weight: 700;
-  font-size: clamp(1.05rem, 2.8vw, 1.25rem);
-  line-height: 1.25;
-  margin: 0 0 6px;
-  color: #111;
+  font-size: clamp(1.2rem, 3.2vw, 1.45rem);
+  line-height: 1.2;
+  margin: 0 0 4px;
+  color: #000;
 }
 .founder-name {
-  font-family: var(--font-body, system-ui, sans-serif);
-  font-size: 0.95rem;
+  font-family: 'Inter', var(--font-body, system-ui, sans-serif);
+  font-size: 0.9rem;
   font-weight: 400;
   line-height: 1.35;
   margin: 0;
-  color: #4b5563;
+  color: #000;
+  letter-spacing: 0.01em;
 }
 
 /* =============================================
@@ -1484,7 +1488,7 @@ blockquote {
   overflow-x: hidden;
 }
 
-/* Верхний отступ только у контента — фото «Наша команда» вплотную к чёрному блоку */
+/* Верхний отступ только у контента под блоком со-основателей */
 .partners-section.dark-section > .container {
   padding-top: 72px;
 }
@@ -3876,17 +3880,23 @@ a.q-submit-btn {
   }
 
   .founders-section .section-title {
-    margin-bottom: 28px;
+    margin-bottom: 32px;
   }
   .founders-grid {
-    grid-template-columns: 1fr;
-    gap: 40px;
-    max-width: 320px;
+    gap: 52px;
+    max-width: 300px;
   }
   .founder-avatar-wrap {
-    width: 200px;
-    height: 200px;
-    margin-bottom: 16px;
+    width: 204px;
+    height: 204px;
+    max-width: min(100%, 204px);
+    margin-bottom: 20px;
+  }
+  .founder-role {
+    font-size: clamp(1.1rem, 4.2vw, 1.32rem);
+  }
+  .founder-name {
+    font-size: 0.86rem;
   }
 
   /* Фото Майнур — круг по центру */
