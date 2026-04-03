@@ -2471,15 +2471,9 @@ blockquote {
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-.cta-legal-links {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   gap: 6px;
 }
 .cta-privacy-text {
-  margin-top: 1.45em;
   font-size: 0.68rem;
   color: #c4c4c4;
   text-align: center;

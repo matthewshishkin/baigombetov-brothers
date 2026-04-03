@@ -179,9 +179,8 @@
         'Ответьте на несколько вопросов и получите бесплатную консультацию с четким прогнозом по вашему делу',
       cta_btn: 'Вернуть средства',
       cta_img_alt: 'Юрист компании',
-      cta_privacy_html:
-        '<a href="privacy.html" class="cta-privacy-link">Политика конфиденциальности</a><a href="personal-data.html" class="cta-privacy-link">Согласие на обработку персональных данных</a>',
-      cta_legal_footer: '© 1999–2026 Братья Байгомбетовы. Все права защищены.',
+      cta_legal_stack:
+        '<a href="privacy.html" class="cta-privacy-link">Политика конфиденциальности</a><a href="personal-data.html" class="cta-privacy-link">Согласие на обработку персональных данных</a><span class="cta-privacy-text">© 1999–2026 Братья Байгомбетовы. Все права защищены.</span>',
 
       quiz_aria: 'Квиз',
       quiz_close: 'Закрыть',
@@ -424,9 +423,8 @@
         'Бірнеше сұраққа жауап беріңіз және ісіңіз бойынша нақты болжамы бар тегін кеңес алыңыз',
       cta_btn: 'Қаражатты қайтару',
       cta_img_alt: 'Компания заңгері',
-      cta_privacy_html:
-        '<a href="privacy-kk.html" class="cta-privacy-link">Құпиялылық саясаты</a><a href="personal-data-kk.html" class="cta-privacy-link">Жеке деректерді өңдеуге келісім</a>',
-      cta_legal_footer: '© 1999–2026 Братья Байгомбетовы. Барлық құқықтар қорғалған.',
+      cta_legal_stack:
+        '<a href="privacy-kk.html" class="cta-privacy-link">Құпиялылық саясаты</a><a href="personal-data-kk.html" class="cta-privacy-link">Жеке деректерді өңдеуге келісім</a><span class="cta-privacy-text">© 1999–2026 Братья Байгомбетовы. Барлық құқықтар қорғалған.</span>',
 
       quiz_aria: 'Сауалнама',
       quiz_close: 'Жабу',
