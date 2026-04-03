@@ -15,8 +15,10 @@
       hero_title_main:
         '<span class="title-desktop-only">Вернем ваши деньги за 3-4 месяца от мошенников,<br>даже если вы уже подавали заявление в полицию</span><span class="title-mobile-only">Вернем ваши<br>деньги за 3-4 месяца<br>от мошенников,<br>даже если вы уже<br>подавали заявление<br>в полицию</span>',
       hero_sub1: 'Привлечем к&nbsp;<span class="hero-pill-emph">уголовной ответственности</span>',
-      hero_sub2: 'до&nbsp;<span class="hero-pill-emph">100%</span>&nbsp;суммы ущерба&nbsp;+ расходы на юриста',
-      hero_sub3: '<span class="hero-pill-emph">154</span>&nbsp;человека получили возврат средств',
+      hero_sub2:
+        '<span class="hero-pill-emph">до&nbsp;100%&nbsp;суммы ущерба</span>&nbsp;+&nbsp;<span class="hero-pill-emph">расходы</span>&nbsp;на юриста',
+      hero_sub3:
+        '<span class="hero-pill-emph">154&nbsp;человека</span>&nbsp;получили возврат средств',
       hero_btn: '<span class="hero-btn-text">Вернуть средства</span>',
 
       law_h2: 'Почему нам можно доверять?',
@@ -251,8 +253,10 @@
       hero_title_main:
         '<span class="title-desktop-only">Ақшаңызды алаяқтардан 3-4 айда қайтарамыз,<br>тіпті полицияға арыз берсеңіз де</span><span class="title-mobile-only">Ақшаңызды<br>3-4 айда алаяқтардан<br>қайтарамыз,<br>тіпті сіз бұған дейін<br>полицияға арыз<br>берсеңіз де</span>',
       hero_sub1: 'Сізді <span class="hero-pill-emph">қылмыстық жауапкершілікке</span> тартуға көмектесеміз',
-      hero_sub2: 'залалдың&nbsp;<span class="hero-pill-emph">100%</span>-ына дейін&nbsp;+ заңгер шығыны',
-      hero_sub3: '<span class="hero-pill-emph">154</span>&nbsp;адам қаражатын қайтарды',
+      hero_sub2:
+        '<span class="hero-pill-emph">залалдың&nbsp;100%-ына дейін</span>&nbsp;+&nbsp;заңгер <span class="hero-pill-emph">шығыны</span>',
+      hero_sub3:
+        '<span class="hero-pill-emph">154&nbsp;адам</span>&nbsp;қаражатын қайтарды',
       hero_btn: '<span class="hero-btn-text">Қаражатты қайтару</span>',
 
       law_h2: 'Неге бізге сенуге болады?',
