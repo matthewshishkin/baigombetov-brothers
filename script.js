@@ -2526,9 +2526,10 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-/* Основатели: диаметр круга = ширина заголовка на мобиле; на десктопе тот же px (сохраняем в data-founders-avatar-ref) */
+/* Основатели: диаметр круга = ширина заголовка на мобиле; на десктопе тот же px (data + localStorage) */
 (function () {
   const MOBILE_MQ = window.matchMedia('(max-width: 960px)');
+  const LS_KEY = 'foundersAvatarPx';
   let raf = 0;
 
   function syncFoundersAvatarSize() {
@@ -2541,11 +2542,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (mobile) {
       section.dataset.foundersAvatarRef = String(measured);
+      try {
+        localStorage.setItem(LS_KEY, String(measured));
+      } catch (_) {}
     }
 
     const ref = parseInt(section.dataset.foundersAvatarRef, 10);
+    let stored = NaN;
+    try {
+      stored = parseInt(localStorage.getItem(LS_KEY) || '', 10);
+    } catch (_) {}
+
     const desktopFallback = Math.min(measured, 320);
-    const size = mobile ? measured : (Number.isFinite(ref) && ref > 0 ? ref : desktopFallback);
+    const fromStore = Number.isFinite(stored) && stored > 0 ? stored : 0;
+    const size = mobile
+      ? measured
+      : Number.isFinite(ref) && ref > 0
+        ? ref
+        : fromStore > 0
+          ? fromStore
+          : desktopFallback;
 
     section.style.setProperty('--founders-avatar-size', `${size}px`);
   }
