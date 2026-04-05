@@ -1803,6 +1803,23 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* =============================================
+     SCROLL ANIMATIONS — Основатели (как law-card: по очереди, data-delay)
+     ============================================= */
+  const founderCards = document.querySelectorAll('.founders-section .founder-card');
+  if (founderCards.length) {
+    const founderObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const delay = parseInt(entry.target.dataset.delay || 0, 10);
+        setTimeout(() => entry.target.classList.add('animate-in'), delay);
+        founderObserver.unobserve(entry.target);
+      });
+    }, { threshold: 0.18, rootMargin: '0px 0px -40px 0px' });
+
+    founderCards.forEach((card) => founderObserver.observe(card));
+  }
+
+  /* =============================================
      SCROLL ANIMATIONS — CTA (title + subtitle)
      ============================================= */
   const ctaEls = document.querySelectorAll('.cta-anim');
