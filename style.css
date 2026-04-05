@@ -1411,6 +1411,8 @@ blockquote {
   overflow-x: hidden;
   background: #fff;
   --founders-avatar-size: 228px;
+  /* как у h2 / .section-title на десктопе — для отступа «высота буквы с» */
+  --founders-title-fs: clamp(1.4rem, 2.6vw, 2rem);
 }
 .founders-section .section-title {
   margin-bottom: 44px;
@@ -1429,7 +1431,10 @@ blockquote {
   gap: 40px 56px;
   max-width: none;
   width: 100%;
-  margin: 0 auto;
+  margin-left: auto;
+  margin-right: auto;
+  /* ~высота строчной «с» в заголовке; gap между карточками не меняется */
+  margin-top: calc(var(--founders-title-fs) * 0.5);
 }
 .founder-card {
   text-align: center;
@@ -3905,6 +3910,9 @@ a.q-submit-btn {
     line-height: 1.35;
   }
 
+  .founders-section {
+    --founders-title-fs: clamp(1.7rem, 7.14vw, 3.4rem);
+  }
   .founders-section .section-title {
     margin-bottom: 32px;
   }
