@@ -3778,8 +3778,29 @@ a.q-submit-btn {
   .owner-ph                { min-height: 280px; }
   .stats-showcase          { grid-template-columns: 1fr; }
 
-  /* CTA */
-  .cta-inner               { grid-template-columns: 1fr; }
+  /* CTA: как на десктопе — юр. ссылки и © внизу экрана (не сразу под кнопкой) */
+  .cta-section {
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100vh - var(--header-h));
+    box-sizing: border-box;
+  }
+  .cta-inner {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 0;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .cta-legal-wrap {
+    margin-top: auto;
+    flex-shrink: 0;
+    width: 100%;
+    box-sizing: border-box;
+  }
   .cta-photo-col           { display: none; }
 
   /* Pricing */
