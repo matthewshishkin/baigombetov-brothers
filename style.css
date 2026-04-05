@@ -3900,12 +3900,12 @@ a.q-submit-btn {
   }
   /* Мобилка: верхний круг — фото правее; нижний — левее */
   .founder-avatar--right {
-    transform: translateX(calc(-50% + min(36vw, 280px)));
-    object-position: 96% 12%;
+    transform: translateX(calc(-50% + min(44vw, 340px)));
+    object-position: 100% 12%;
   }
   .founder-avatar--left {
-    transform: translateX(calc(-50% - min(36vw, 280px)));
-    object-position: 4% 12%;
+    transform: translateX(calc(-50% - min(44vw, 340px)));
+    object-position: 0% 12%;
   }
   .founder-name {
     font-size: 0.86rem;
