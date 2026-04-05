@@ -1405,7 +1405,7 @@ blockquote {
   margin-inline: auto;
 }
 
-/* Блок «Основатели фирмы» — колонка, круг + имя; на ≤960px диаметр круга = ширина заголовка (JS: --founders-avatar-size) */
+/* Блок «Основатели фирмы»: десктоп — два круга в ряд; размер круга = эталон с мобилы (JS). Фото: без inset+right (ломало object-fit) */
 .section.founders-section {
   padding-bottom: 64px;
   overflow-x: hidden;
@@ -1422,16 +1422,20 @@ blockquote {
 }
 .founders-grid {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 64px;
-  max-width: 340px;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 40px 56px;
+  max-width: none;
+  width: 100%;
   margin: 0 auto;
 }
 .founder-card {
   text-align: center;
-  width: 100%;
-  max-width: 100%;
+  flex: 0 1 auto;
+  width: auto;
+  max-width: min(100%, 320px);
 }
 .founder-avatar-wrap {
   width: var(--founders-avatar-size);
@@ -1447,26 +1451,25 @@ blockquote {
 }
 .founder-avatar {
   position: absolute;
-  inset: 0;
-  width: 240%;
+  top: 0;
   height: 100%;
+  width: 290%;
   max-width: none;
+  left: 50%;
   object-fit: cover;
   display: block;
   pointer-events: none;
   user-select: none;
 }
-/* Первый круг — фигура справа на дуо: сдвиг кадра вправо */
+/* Первый круг — человек справа на дуо: сдвиг вправо (transform + позиция) */
 .founder-avatar--right {
-  left: 50%;
-  transform: translateX(-50%);
-  object-position: 96% 35%;
+  transform: translateX(calc(-50% + min(18vw, 160px)));
+  object-position: 78% 34%;
 }
-/* Второй круг — фигура слева на дуо: сдвиг кадра влево */
+/* Второй круг — человек слева: сдвиг влево */
 .founder-avatar--left {
-  left: 50%;
-  transform: translateX(-50%);
-  object-position: 6% 35%;
+  transform: translateX(calc(-50% - min(18vw, 160px)));
+  object-position: 22% 34%;
 }
 .founder-name {
   font-family: 'Inter', var(--font-body, system-ui, sans-serif);
@@ -3883,13 +3886,16 @@ a.q-submit-btn {
     margin-bottom: 32px;
   }
   .founders-grid {
+    flex-direction: column;
+    align-items: center;
     gap: 52px;
-    max-width: none;
     width: 100%;
     padding-inline: 0;
   }
+  .founder-card {
+    max-width: 100%;
+  }
   .founder-avatar-wrap {
-    /* размер задаёт JS по ширине #foundersTitleMeasure, иначе fallback --founders-avatar-size */
     margin-bottom: 20px;
   }
   .founder-name {

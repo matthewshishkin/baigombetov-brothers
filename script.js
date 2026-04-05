@@ -2526,21 +2526,28 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-/* Основатели: на экранах ≤960px диаметр круга = ширина заголовка «Основатели фирмы:» (от «О» до «:») */
+/* Основатели: диаметр круга = ширина заголовка на мобиле; на десктопе тот же px (сохраняем в data-founders-avatar-ref) */
 (function () {
-  const MQ = '(max-width: 960px)';
+  const MOBILE_MQ = window.matchMedia('(max-width: 960px)');
   let raf = 0;
 
   function syncFoundersAvatarSize() {
     const section = document.querySelector('.founders-section');
     const title = document.getElementById('foundersTitleMeasure');
     if (!section || !title) return;
-    if (!window.matchMedia(MQ).matches) {
-      section.style.removeProperty('--founders-avatar-size');
-      return;
+
+    const measured = Math.max(120, Math.round(title.getBoundingClientRect().width));
+    const mobile = MOBILE_MQ.matches;
+
+    if (mobile) {
+      section.dataset.foundersAvatarRef = String(measured);
     }
-    const w = Math.round(title.getBoundingClientRect().width);
-    section.style.setProperty('--founders-avatar-size', `${Math.max(120, w)}px`);
+
+    const ref = parseInt(section.dataset.foundersAvatarRef, 10);
+    const desktopFallback = Math.min(measured, 320);
+    const size = mobile ? measured : (Number.isFinite(ref) && ref > 0 ? ref : desktopFallback);
+
+    section.style.setProperty('--founders-avatar-size', `${size}px`);
   }
 
   function schedule() {
@@ -2562,4 +2569,5 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   window.addEventListener('resize', schedule, { passive: true });
   window.addEventListener('siteLangChange', schedule);
+  MOBILE_MQ.addEventListener('change', schedule);
 })();
