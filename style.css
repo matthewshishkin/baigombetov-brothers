@@ -3898,6 +3898,15 @@ a.q-submit-btn {
   .founder-avatar-wrap {
     margin-bottom: 20px;
   }
+  /* Мобилка: верхний круг — фото правее; нижний — левее */
+  .founder-avatar--right {
+    transform: translateX(calc(-50% + min(28vw, 220px)));
+    object-position: 90% 12%;
+  }
+  .founder-avatar--left {
+    transform: translateX(calc(-50% - min(28vw, 220px)));
+    object-position: 10% 12%;
+  }
   .founder-name {
     font-size: 0.86rem;
   }
