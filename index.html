@@ -13,7 +13,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=288" />
+  <link rel="stylesheet" href="style.css?v=289" />
 </head>
 <body>
   <div id="siteLoadingOverlay" class="site-loading-overlay" aria-hidden="true">
@@ -252,13 +252,13 @@
     <div class="container">
       <h2 class="section-title"><span id="foundersTitleMeasure" data-i18n="founders_h2">Основатели фирмы:</span></h2>
       <div class="founders-grid" role="list">
-        <!-- 1 — кадр справа на дуо; 2 — кадр слева (подгонка object-position) -->
+        <!-- Верхний круг: кадр B (левое лицо на дуо); нижний: кадр A (правое) — стили slot1/slot2 без изменения цифр -->
         <article class="founder-card" role="listitem">
           <div class="founder-avatar-wrap">
             <img
               src="./founders-duo.png?v=1"
               alt=""
-              class="founder-avatar founder-avatar--right protect-asset"
+              class="founder-avatar founder-avatar--slot2 protect-asset"
               width="1024"
               height="824"
               loading="lazy"
@@ -273,7 +273,7 @@
             <img
               src="./founders-duo.png?v=1"
               alt=""
-              class="founder-avatar founder-avatar--left protect-asset"
+              class="founder-avatar founder-avatar--slot1 protect-asset"
               width="1024"
               height="824"
               loading="lazy"

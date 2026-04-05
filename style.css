@@ -1461,13 +1461,13 @@ blockquote {
   pointer-events: none;
   user-select: none;
 }
-/* Первый круг — человек справа на дуо: сдвиг вправо (transform + позиция) */
-.founder-avatar--right {
+/* Кадр A — настройки под правую половину дуо (transform + object-position) */
+.founder-avatar--slot1 {
   transform: translateX(calc(-50% + min(18vw, 160px)));
   object-position: 78% 12%;
 }
-/* Второй круг — человек слева: сдвиг влево */
-.founder-avatar--left {
+/* Кадр B — настройки под левую половину дуо */
+.founder-avatar--slot2 {
   transform: translateX(calc(-50% - min(18vw, 160px)));
   object-position: 22% 12%;
 }
@@ -3919,12 +3919,12 @@ a.q-submit-btn {
   .founder-avatar-wrap {
     margin-bottom: 20px;
   }
-  /* Мобилка: верхний круг — фото правее; нижний — левее */
-  .founder-avatar--right {
+  /* Мобилка: для кадра A — сильнее вправо; для кадра B — сильнее влево */
+  .founder-avatar--slot1 {
     transform: translateX(calc(-50% + min(47vw, 358px) + 10px));
     object-position: 100% 12%;
   }
-  .founder-avatar--left {
+  .founder-avatar--slot2 {
     transform: translateX(calc(-50% - min(47vw, 358px) - 10px));
     object-position: 0% 12%;
   }
