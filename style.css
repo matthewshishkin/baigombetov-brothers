@@ -3921,11 +3921,11 @@ a.q-submit-btn {
   }
   /* Мобилка: верхний круг — фото правее; нижний — левее */
   .founder-avatar--right {
-    transform: translateX(calc(-50% + min(44vw, 340px)));
+    transform: translateX(calc(-50% + min(47vw, 358px) + 10px));
     object-position: 100% 12%;
   }
   .founder-avatar--left {
-    transform: translateX(calc(-50% - min(44vw, 340px)));
+    transform: translateX(calc(-50% - min(47vw, 358px) - 10px));
     object-position: 0% 12%;
   }
   .founder-name {
