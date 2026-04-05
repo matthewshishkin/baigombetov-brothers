@@ -1807,11 +1807,18 @@ document.addEventListener('DOMContentLoaded', () => {
      ============================================= */
   const founderCards = document.querySelectorAll('.founders-section .founder-card');
   if (founderCards.length) {
+    const revealFounderCard = (el) => {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          el.classList.add('animate-in');
+        });
+      });
+    };
     const founderObserver = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (!entry.isIntersecting) return;
         const delay = parseInt(entry.target.dataset.delay || 0, 10);
-        setTimeout(() => entry.target.classList.add('animate-in'), delay);
+        setTimeout(() => revealFounderCard(entry.target), delay);
         founderObserver.unobserve(entry.target);
       });
     }, { threshold: 0.18, rootMargin: '0px 0px -40px 0px' });

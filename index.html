@@ -253,7 +253,7 @@
       <h2 class="section-title"><span id="foundersTitleMeasure" data-i18n="founders_h2">Основатели фирмы:</span></h2>
       <div class="founders-grid" role="list">
         <!-- Верхний круг: кадр B (левое лицо на дуо); нижний: кадр A (правое) — стили slot1/slot2 без изменения цифр -->
-        <article class="founder-card" role="listitem" data-delay="0">
+        <article class="founder-card" role="listitem" data-delay="80">
           <div class="founder-avatar-wrap">
             <img
               src="./founders-duo.png?v=1"
@@ -261,14 +261,15 @@
               class="founder-avatar founder-avatar--slot2 protect-asset"
               width="1024"
               height="824"
-              loading="lazy"
+              loading="eager"
+              fetchpriority="low"
               draggable="false"
               data-i18n-alt="founders_alt_1"
             />
           </div>
           <p class="founder-name" data-i18n="founders_name_1">Баймагамбетов Берик Абенович</p>
         </article>
-        <article class="founder-card" role="listitem" data-delay="150">
+        <article class="founder-card" role="listitem" data-delay="230">
           <div class="founder-avatar-wrap">
             <img
               src="./founders-duo.png?v=1"
@@ -684,6 +685,6 @@
   </script>
 
   <script src="i18n.js?v=56"></script>
-  <script src="script.js?v=106"></script>
+  <script src="script.js?v=107"></script>
 </body>
 </html>
