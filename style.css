@@ -1464,12 +1464,12 @@ blockquote {
 /* Первый круг — человек справа на дуо: сдвиг вправо (transform + позиция) */
 .founder-avatar--right {
   transform: translateX(calc(-50% + min(18vw, 160px)));
-  object-position: 78% 22%;
+  object-position: 78% 12%;
 }
 /* Второй круг — человек слева: сдвиг влево */
 .founder-avatar--left {
   transform: translateX(calc(-50% - min(18vw, 160px)));
-  object-position: 22% 22%;
+  object-position: 22% 12%;
 }
 .founder-name {
   font-family: 'Inter', var(--font-body, system-ui, sans-serif);
