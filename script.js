@@ -2525,3 +2525,41 @@ document.addEventListener('DOMContentLoaded', () => {
     iframe.title = legitModalTitle();
   });
 });
+
+/* Основатели: на экранах ≤960px диаметр круга = ширина заголовка «Основатели фирмы:» (от «О» до «:») */
+(function () {
+  const MQ = '(max-width: 960px)';
+  let raf = 0;
+
+  function syncFoundersAvatarSize() {
+    const section = document.querySelector('.founders-section');
+    const title = document.getElementById('foundersTitleMeasure');
+    if (!section || !title) return;
+    if (!window.matchMedia(MQ).matches) {
+      section.style.removeProperty('--founders-avatar-size');
+      return;
+    }
+    const w = Math.round(title.getBoundingClientRect().width);
+    section.style.setProperty('--founders-avatar-size', `${Math.max(120, w)}px`);
+  }
+
+  function schedule() {
+    cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(syncFoundersAvatarSize);
+  }
+
+  function boot() {
+    schedule();
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(schedule);
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
+  } else {
+    boot();
+  }
+  window.addEventListener('resize', schedule, { passive: true });
+  window.addEventListener('siteLangChange', schedule);
+})();

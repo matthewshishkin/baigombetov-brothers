@@ -1405,14 +1405,20 @@ blockquote {
   margin-inline: auto;
 }
 
-/* Блок «Основатели фирмы» — одна колонка, круг + роль (serif) + имя (sans), чёрный текст */
+/* Блок «Основатели фирмы» — колонка, круг + имя; на ≤960px диаметр круга = ширина заголовка (JS: --founders-avatar-size) */
 .section.founders-section {
   padding-bottom: 64px;
   overflow-x: hidden;
   background: #fff;
+  --founders-avatar-size: 228px;
 }
 .founders-section .section-title {
   margin-bottom: 44px;
+}
+.founders-section .section-title #foundersTitleMeasure {
+  display: inline-block;
+  max-width: 100%;
+  text-align: center;
 }
 .founders-grid {
   display: flex;
@@ -1428,9 +1434,9 @@ blockquote {
   max-width: 100%;
 }
 .founder-avatar-wrap {
-  width: 228px;
-  height: 228px;
-  max-width: min(100%, 228px);
+  width: var(--founders-avatar-size);
+  height: var(--founders-avatar-size);
+  max-width: min(100%, var(--founders-avatar-size));
   margin: 0 auto 24px;
   border-radius: 50%;
   overflow: hidden;
@@ -1450,25 +1456,17 @@ blockquote {
   pointer-events: none;
   user-select: none;
 }
-/* Первый круг — фигура справа на дуо: сильный сдвиг влево, лицо по центру */
+/* Первый круг — фигура справа на дуо: сдвиг кадра вправо */
 .founder-avatar--right {
   left: 50%;
   transform: translateX(-50%);
-  object-position: 36% 35%;
+  object-position: 96% 35%;
 }
-/* Второй круг — фигура слева на дуо: сильный сдвиг вправо, лицо по центру */
+/* Второй круг — фигура слева на дуо: сдвиг кадра влево */
 .founder-avatar--left {
   left: 50%;
   transform: translateX(-50%);
-  object-position: 72% 35%;
-}
-.founder-role {
-  font-family: var(--font-heading, 'Playfair Display', Georgia, serif);
-  font-weight: 700;
-  font-size: clamp(1.2rem, 3.2vw, 1.45rem);
-  line-height: 1.2;
-  margin: 0 0 4px;
-  color: #000;
+  object-position: 6% 35%;
 }
 .founder-name {
   font-family: 'Inter', var(--font-body, system-ui, sans-serif);
@@ -3886,16 +3884,13 @@ a.q-submit-btn {
   }
   .founders-grid {
     gap: 52px;
-    max-width: 300px;
+    max-width: none;
+    width: 100%;
+    padding-inline: 0;
   }
   .founder-avatar-wrap {
-    width: 204px;
-    height: 204px;
-    max-width: min(100%, 204px);
+    /* размер задаёт JS по ширине #foundersTitleMeasure, иначе fallback --founders-avatar-size */
     margin-bottom: 20px;
-  }
-  .founder-role {
-    font-size: clamp(1.1rem, 4.2vw, 1.32rem);
   }
   .founder-name {
     font-size: 0.86rem;
