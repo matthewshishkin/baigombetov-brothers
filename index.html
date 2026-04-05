@@ -267,7 +267,7 @@
               data-i18n-alt="founders_alt_1"
             />
           </div>
-          <p class="founder-name" data-i18n="founders_name_1">Баймагамбетов Берик Абенович</p>
+          <p class="founder-name" data-i18n="founders_name_1">Байгомбетов Берик Абенович</p>
         </article>
         <article class="founder-card" role="listitem" data-delay="230">
           <div class="founder-avatar-wrap">
@@ -282,7 +282,7 @@
               data-i18n-alt="founders_alt_2"
             />
           </div>
-          <p class="founder-name" data-i18n="founders_name_2">Баймагамбетов Серик Абенович</p>
+          <p class="founder-name" data-i18n="founders_name_2">Байгомбетов Серик Абенович</p>
         </article>
       </div>
     </div>
@@ -621,15 +621,17 @@
           <h3 data-i18n="q6_h" data-i18n-html="true">Отлично!<br>Оставьте контакт ниже:</h3>
           <p class="q-hint" data-i18n="q6_hint">Юрист свяжется с вами в течение 30 минут</p>
           <form class="q-contact-form" onsubmit="submitQuizLastStep(event)" novalidate>
-            <input type="text" name="name" data-i18n-placeholder="q_ph_name" placeholder="Ваше имя" required autocomplete="name" />
-            <input
-              type="tel"
-              name="phone"
-              data-i18n-placeholder="q_ph_phone"
-              placeholder="+7 (     )   -   -"
-              required
-              autocomplete="tel"
-            />
+            <div class="q-contact-row">
+              <input type="text" name="name" data-i18n-placeholder="q_ph_name" placeholder="Ваше имя" required autocomplete="name" />
+              <input
+                type="tel"
+                name="phone"
+                data-i18n-placeholder="q_ph_phone"
+                placeholder="+7 (     )   -   -"
+                required
+                autocomplete="tel"
+              />
+            </div>
             <input type="text" name="city" required class="q-city-select" data-i18n-placeholder="q_city_pl" data-i18n-aria="q_city_aria" aria-label="Укажите город" placeholder="Укажите город" autocomplete="address-level2" />
 
             <div class="q-nav q-nav-submit">

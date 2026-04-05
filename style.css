@@ -3049,6 +3049,23 @@ img.protect-asset,
 }
 .q-contact-form { display: flex; flex-direction: column; gap: 12px; text-align: left; }
 
+/* Имя и телефон — две колонки на широком экране; на узком — столбик */
+.q-contact-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 12px;
+  width: 100%;
+}
+@media (max-width: 520px) {
+  .q-contact-row {
+    grid-template-columns: 1fr;
+  }
+}
+.q-contact-form input[name="phone"] {
+  min-width: 0;
+  font-variant-numeric: tabular-nums;
+}
+
 /* Согласия: обводка как у полей (#dde5f4); по центру с текстом; при выборе — чёрная заливка и белая галочка */
 .q-consent {
   display: flex;
