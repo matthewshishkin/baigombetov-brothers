@@ -3929,13 +3929,13 @@ a.q-submit-btn {
   .founder-avatar-wrap {
     margin-bottom: 20px;
   }
-  /* Мобилка: верхний (slot2) +2% вправо от прежнего; нижний (slot1) −1% влево (% от ширины img) */
+  /* Мобилка: верхний (slot2) — сдвиг % от ширины img; нижний (slot1) без изменений */
   .founder-avatar--slot1 {
     transform: translateX(calc(-50% + min(38vw, 292px) + 10px + 1%));
     object-position: 100% 12%;
   }
   .founder-avatar--slot2 {
-    transform: translateX(calc(-50% - min(38vw, 292px) - 10px - 3%));
+    transform: translateX(calc(-50% - min(38vw, 292px) - 10px - 1%));
     object-position: 0% 7%;
   }
   .founder-name {
