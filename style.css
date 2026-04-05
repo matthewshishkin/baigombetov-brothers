@@ -3784,6 +3784,8 @@ a.q-submit-btn {
     flex-direction: column;
     min-height: calc(100vh - var(--header-h));
     box-sizing: border-box;
+    /* без лишнего «поля» под футером блока — иначе серые строки висят выше низа */
+    padding-bottom: max(12px, env(safe-area-inset-bottom, 0px));
   }
   .cta-inner {
     flex: 1 1 auto;
@@ -3800,6 +3802,7 @@ a.q-submit-btn {
     flex-shrink: 0;
     width: 100%;
     box-sizing: border-box;
+    padding-bottom: 0;
   }
   .cta-photo-col           { display: none; }
 
@@ -3857,11 +3860,10 @@ a.q-submit-btn {
 
   .section          { padding: 60px 0; }
   .pricing-section  { padding-bottom: 84px; } /* 60 + 24: зазор перед CTA на мобиле */
-  /* CTA: компактнее по высоте (футер убран) */
+  /* CTA: воздух сверху; снизу только safe-area — юр. блок у нижнего края секции */
   .cta-section {
     padding-top: 96px;
-    /* +1 высота CTA-кнопки по просьбе: добавить воздуха снизу на мобиле */
-    padding-bottom: 120px;
+    padding-bottom: max(12px, env(safe-area-inset-bottom, 0px));
   }
   .hero--video      { margin-top: var(--header-h); min-height: calc(100vh - var(--header-h)); }
   .hero-content-wrap {
