@@ -53,6 +53,8 @@ function normalizeUtm(utm) {
     utm_medium: sanitizeUtmValue(utm.utm_medium),
     utm_campaign: sanitizeUtmValue(utm.utm_campaign),
     utm_content: sanitizeUtmValue(utm.utm_content),
+    /** {{ad.name}} из рекламы; старые ссылки могли слать utm_term — храним для спойлера */
+    utm_adname: sanitizeUtmValue(utm.utm_adname),
     utm_term: sanitizeUtmValue(utm.utm_term),
   };
   const hasAny = Object.values(out).some(Boolean);
@@ -149,7 +151,11 @@ function buildUtmSpoilerHtml(utm) {
   if (utm.utm_medium) lines.push(`utm_medium: ${utm.utm_medium}`);
   if (utm.utm_campaign) lines.push(`utm_campaign: ${utm.utm_campaign}`);
   if (utm.utm_content) lines.push(`utm_content: ${utm.utm_content}`);
-  if (utm.utm_term) lines.push(`utm_term: ${utm.utm_term}`);
+  if (utm.utm_adname) lines.push(`utm_adname: ${utm.utm_adname}`);
+  else if (utm.utm_term) lines.push(`utm_adname: ${utm.utm_term}`);
+  if (utm.utm_term && utm.utm_adname && utm.utm_term !== utm.utm_adname) {
+    lines.push(`utm_term (legacy): ${utm.utm_term}`);
+  }
   if (lines.length <= 1) return '';
   /* В HTML-режиме Telegram тег <br> не поддерживается — только \n */
   const inner = lines.map((line) => escapeHtml(line)).join('\n');
@@ -229,7 +235,7 @@ async function handler(req, res) {
     return res.status(200).json({
       ok: true,
       hint:
-        'POST JSON: { "text": "...", "utm": { ... }, "pageUrl": "https://..." } — счётчики: leads:total, leads:ad:{utm_term}, leads:page:{host+path}',
+        'POST JSON: { "text": "...", "utm": { ... }, "pageUrl": "https://..." } — счётчики: leads:total, leads:ad:{utm_adname|utm_term}, leads:page:{host+path}',
     });
   }
 
@@ -250,7 +256,7 @@ async function handler(req, res) {
   }
 
   const utm = normalizeUtm(body && body.utm);
-  const adName = utm && utm.utm_term ? utm.utm_term : null;
+  const adName = utm ? utm.utm_adname || utm.utm_term || null : null;
   const pageUrl = sanitizePageUrl(body && body.pageUrl);
 
   const totalLeadNo = await upstashIncr('leads:total');

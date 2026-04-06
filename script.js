@@ -1053,6 +1053,7 @@ function getUtmFromUrl() {
       utm_medium: pick('utm_medium'),
       utm_campaign: pick('utm_campaign'),
       utm_content: pick('utm_content'),
+      utm_adname: pick('utm_adname'),
       utm_term: pick('utm_term'),
     };
     const hasAny = Object.values(utm).some(Boolean);
