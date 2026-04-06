@@ -1,7 +1,7 @@
 /**
  * Vercel Serverless (Node): прокси к Telegram Bot API.
  * Должен открываться: GET /api/send-telegram
- * parse_mode HTML + tg-spoiler для UTM
+ * parse_mode HTML; UTM — в expandable blockquote (не tg-spoiler)
  */
 const crypto = require('crypto');
 
@@ -144,9 +144,10 @@ async function upstashIncr(key) {
   return data.result;
 }
 
-function buildUtmSpoilerHtml(utm) {
+/** UTM в сворачиваемой цитате (expandable blockquote), не спойлер */
+function buildUtmExpandableBlockquoteHtml(utm) {
   if (!utm) return '';
-  const lines = ['🔎 UTM'];
+  const lines = [];
   if (utm.utm_source) lines.push(`utm_source: ${utm.utm_source}`);
   if (utm.utm_medium) lines.push(`utm_medium: ${utm.utm_medium}`);
   if (utm.utm_campaign) lines.push(`utm_campaign: ${utm.utm_campaign}`);
@@ -156,10 +157,9 @@ function buildUtmSpoilerHtml(utm) {
   if (utm.utm_term && utm.utm_adname && utm.utm_term !== utm.utm_adname) {
     lines.push(`utm_term (legacy): ${utm.utm_term}`);
   }
-  if (lines.length <= 1) return '';
-  /* В HTML-режиме Telegram тег <br> не поддерживается — только \n */
+  if (lines.length === 0) return '';
   const inner = lines.map((line) => escapeHtml(line)).join('\n');
-  return `<tg-spoiler>${inner}</tg-spoiler>`;
+  return `🔎 UTM\n\n<blockquote expandable>\n${inner}\n</blockquote>`;
 }
 
 /** Тело заявки: экранирование HTML; переносы строк — \n (не <br>) */
@@ -206,9 +206,9 @@ function buildMessageHtml({
     blocks.push('🌐 Страница: —');
   }
   blocks.push('');
-  const spoiler = buildUtmSpoilerHtml(utm);
-  if (spoiler) {
-    blocks.push(spoiler);
+  const utmQuote = buildUtmExpandableBlockquoteHtml(utm);
+  if (utmQuote) {
+    blocks.push(utmQuote);
     blocks.push('');
   }
   blocks.push(bodyToTelegramHtml(text));
