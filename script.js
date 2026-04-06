@@ -1021,24 +1021,24 @@ function formatQuizAnswerForStep(step) {
   return getQuizOptionLabel(step, raw);
 }
 
-/** Текст заявки для Telegram: контакты + ответы (заголовок и нумерация добавляет сервер). */
-function buildTelegramLeadMessage(form) {
+function getLeadFormFields(form) {
   const fd = new FormData(form);
-  const name = (fd.get('name') || '').toString().trim();
-  const phone = (fd.get('phone') || '').toString().trim();
-  const city = (fd.get('city') || '').toString().trim();
+  return {
+    name: (fd.get('name') || '').toString().trim(),
+    phone: (fd.get('phone') || '').toString().trim(),
+    city: (fd.get('city') || '').toString().trim(),
+  };
+}
 
-  const contactBlock = `👤 Имя: ${name}\n📞 Телефон: ${phone}\n📍 Город: ${city}`;
-
+/** Только блок ответов квиза — контакты сервер собирает из lead + lookup Telegram/WhatsApp */
+function buildTelegramAnswersOnly(form) {
   const qaParts = [];
   for (let s = 1; s <= TOTAL_STEPS; s++) {
     const qTitle = getQuizStepQuestionTitle(s);
     const ans = formatQuizAnswerForStep(s);
     qaParts.push(`Вопрос ${s}:\n${qTitle}\nОтвет: ${ans}`);
   }
-  const answersBlock = qaParts.join('\n\n');
-
-  return `${contactBlock}\n\n📋 Ответы на вопросы:\n\n${answersBlock}`;
+  return `📋 Ответы на вопросы:\n\n${qaParts.join('\n\n')}`;
 }
 
 function getUtmFromUrl() {
@@ -1077,13 +1077,14 @@ function getPageUrlForLead() {
  * Отправка заявки через прокси Vercel (без CORS).
  */
 async function sendQuizLeadToTelegram(form) {
-  const text = buildTelegramLeadMessage(form);
+  const text = buildTelegramAnswersOnly(form);
+  const lead = getLeadFormFields(form);
   const utm = getUtmFromUrl();
   const pageUrl = getPageUrlForLead();
   const res = await fetch(TELEGRAM_PROXY_URL, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ text, utm, pageUrl }),
+    body: JSON.stringify({ text, lead, utm, pageUrl }),
   });
   const data = await res.json().catch(() => ({}));
   if (!res.ok || !data || data.ok !== true) {

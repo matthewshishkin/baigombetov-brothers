@@ -2,6 +2,10 @@
  * Vercel Serverless (Node): прокси к Telegram Bot API.
  * Должен открываться: GET /api/send-telegram
  * parse_mode HTML; UTM — в expandable blockquote (не tg-spoiler)
+ *
+ * Опционально — username по номеру (бот так не умеет):
+ * - TELEGRAM_USERNAME_LOOKUP_URL + TELEGRAM_USERNAME_LOOKUP_SECRET — POST JSON { phone, phoneDigits } → { username } | { registered: false }
+ * - или GramJS (user session): TELEGRAM_USER_API_ID, TELEGRAM_USER_API_HASH, TELEGRAM_USER_SESSION — contacts.resolvePhone
  */
 const crypto = require('crypto');
 
@@ -74,6 +78,160 @@ function sanitizePageUrl(raw) {
   } catch {
     return null;
   }
+}
+
+function normalizePhoneDigits(raw) {
+  return String(raw || '').replace(/\D/g, '');
+}
+
+/** 8XXXXXXXXXXX (РФ/КЗ) → 7… для международного формата */
+function digitsToInternationalDigits(digits) {
+  let d = digits;
+  if (!d) return '';
+  if (d.length === 11 && d[0] === '8') d = `7${d.slice(1)}`;
+  return d;
+}
+
+function internationalPlusFromRaw(raw) {
+  const digits = digitsToInternationalDigits(normalizePhoneDigits(raw));
+  if (digits.length < 10 || digits.length > 15) return null;
+  return `+${digits}`;
+}
+
+function sanitizeLeadField(v, max) {
+  if (v == null) return '';
+  const s = String(v).trim();
+  return s.slice(0, max || 200);
+}
+
+function normalizeLead(raw) {
+  if (!raw || typeof raw !== 'object') return null;
+  const name = sanitizeLeadField(raw.name, 200);
+  const phone = sanitizeLeadField(raw.phone, 40);
+  const city = sanitizeLeadField(raw.city, 200);
+  if (!phone && !name && !city) return null;
+  return { name, phone, city };
+}
+
+/** GramJS: один клиент на инстанс serverless */
+let gramClient = null;
+let gramConnecting = null;
+
+async function getGramClient() {
+  const apiId = process.env.TELEGRAM_USER_API_ID;
+  const apiHash = process.env.TELEGRAM_USER_API_HASH;
+  const session = process.env.TELEGRAM_USER_SESSION;
+  if (!apiId || !apiHash || !session) return null;
+  if (gramClient) return gramClient;
+  if (gramConnecting) return gramConnecting;
+  gramConnecting = (async () => {
+    try {
+      const { TelegramClient } = require('telegram');
+      const { StringSession } = require('telegram/sessions');
+      const client = new TelegramClient(
+        new StringSession(session),
+        Number(apiId),
+        apiHash,
+        { connectionRetries: 2, requestRetries: 1, timeout: 12000 },
+      );
+      await client.connect();
+      gramClient = client;
+      return client;
+    } finally {
+      gramConnecting = null;
+    }
+  })();
+  return gramConnecting;
+}
+
+/**
+ * @returns {Promise<{ type: 'username', username: string } | { type: 'no_username' } | { type: 'unregistered' } | { type: 'skipped' } | null>}
+ */
+async function resolveViaGramJs(phoneInternational) {
+  try {
+    const client = await getGramClient();
+    if (!client) return null;
+    const { Api } = require('telegram/tl');
+    const res = await client.invoke(new Api.contacts.ResolvePhone({ phone: phoneInternational }));
+    const users = res.users || [];
+    for (const u of users) {
+      if (u.bot) continue;
+      const un = u.username && String(u.username).trim();
+      if (un) return { type: 'username', username: un };
+      return { type: 'no_username' };
+    }
+    return { type: 'unregistered' };
+  } catch (e) {
+    const msg = String((e && (e.errorMessage || e.message)) || '');
+    if (msg.includes('PHONE_NOT_OCCUPIED')) return { type: 'unregistered' };
+    return null;
+  }
+}
+
+/**
+ * @returns {Promise<{ type: 'username', username: string } | { type: 'no_username' } | { type: 'unregistered' } | { type: 'skipped' }>}
+ */
+async function resolveTelegramUserInfo(phoneRaw) {
+  const intl = internationalPlusFromRaw(phoneRaw);
+  if (!intl) return { type: 'skipped' };
+
+  const lookupUrl = process.env.TELEGRAM_USERNAME_LOOKUP_URL;
+  if (lookupUrl) {
+    try {
+      const headers = { 'Content-Type': 'application/json' };
+      const secret = process.env.TELEGRAM_USERNAME_LOOKUP_SECRET;
+      if (secret) headers.Authorization = `Bearer ${secret}`;
+      const r = await fetch(lookupUrl, {
+        method: 'POST',
+        headers,
+        body: JSON.stringify({
+          phone: intl,
+          phoneDigits: normalizePhoneDigits(phoneRaw),
+        }),
+      });
+      const j = await r.json().catch(() => ({}));
+      if (j && typeof j.username === 'string' && j.username.trim()) {
+        return { type: 'username', username: j.username.trim().replace(/^@/, '') };
+      }
+      if (j && j.registered === true) return { type: 'no_username' };
+      if (j && j.registered === false) return { type: 'unregistered' };
+    } catch (_) {}
+  }
+
+  const g = await resolveViaGramJs(intl);
+  if (g) return g;
+  return { type: 'skipped' };
+}
+
+function formatTelegramLineHtml(tg) {
+  if (tg && tg.type === 'username' && tg.username) {
+    const u = escapeHtml(tg.username);
+    return `<a href="https://t.me/${u}">@${u}</a>`;
+  }
+  if (tg && tg.type === 'no_username') {
+    return escapeHtml('есть в Telegram (нет @username)');
+  }
+  return escapeHtml('не зареган');
+}
+
+function formatLeadContactHtml(lead, tg) {
+  const name = escapeHtml(lead.name || '—');
+  const city = escapeHtml(lead.city || '—');
+  const phoneDisplay = escapeHtml(lead.phone || '—');
+  const d = digitsToInternationalDigits(normalizePhoneDigits(lead.phone));
+  const waUrl = d && d.length >= 10 ? `https://wa.me/${d}` : null;
+  const waSafe = waUrl ? escapeHtml(waUrl) : null;
+  const tgHtml = formatTelegramLineHtml(tg);
+  const waLine = waSafe
+    ? `📞 WhatsApp: <a href="${waSafe}">${waSafe}</a>`
+    : `📞 WhatsApp: —`;
+  return [
+    `👤 Имя: ${name}`,
+    `📍 Город: ${city}`,
+    `📞 Телефон: ${phoneDisplay}`,
+    `📞 Telegram: ${tgHtml}`,
+    waLine,
+  ].join('\n');
 }
 
 /**
@@ -175,6 +333,8 @@ function buildMessageHtml({
   adName,
   pageUrl,
   perPageLeadNo,
+  lead,
+  telegramResolve,
 }) {
   const blocks = [];
   blocks.push('🔔 Новая заявка с сайта!');
@@ -211,7 +371,14 @@ function buildMessageHtml({
     blocks.push(utmQuote);
     blocks.push('');
   }
-  blocks.push(bodyToTelegramHtml(text));
+  let bodyHtml;
+  if (lead && (lead.phone || lead.name || lead.city)) {
+    bodyHtml = formatLeadContactHtml(lead, telegramResolve);
+    bodyHtml += '\n\n' + bodyToTelegramHtml(text);
+  } else {
+    bodyHtml = bodyToTelegramHtml(text);
+  }
+  blocks.push(bodyHtml);
   return blocks.join('\n');
 }
 
@@ -235,7 +402,7 @@ async function handler(req, res) {
     return res.status(200).json({
       ok: true,
       hint:
-        'POST JSON: { "text": "...", "utm": { ... }, "pageUrl": "https://..." } — счётчики: leads:total, leads:ad:{utm_adname|utm_term}, leads:page:{host+path}',
+        'POST JSON: { "text": "...", "lead": { "name","phone","city" }, "utm": {...}, "pageUrl": "https://..." }',
     });
   }
 
@@ -258,6 +425,12 @@ async function handler(req, res) {
   const utm = normalizeUtm(body && body.utm);
   const adName = utm ? utm.utm_adname || utm.utm_term || null : null;
   const pageUrl = sanitizePageUrl(body && body.pageUrl);
+  const lead = normalizeLead(body && body.lead);
+
+  let telegramResolve = { type: 'skipped' };
+  if (lead && lead.phone) {
+    telegramResolve = await resolveTelegramUserInfo(lead.phone);
+  }
 
   const totalLeadNo = await upstashIncr('leads:total');
   const perAdLeadNo = adName ? await upstashIncr(`leads:ad:${adName}`) : null;
@@ -272,6 +445,8 @@ async function handler(req, res) {
     adName,
     pageUrl,
     perPageLeadNo,
+    lead,
+    telegramResolve,
   });
 
   const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
