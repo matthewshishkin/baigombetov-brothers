@@ -1,7 +1,0 @@
-{
-  "name": "baigombetov-brothers",
-  "private": true,
-  "dependencies": {
-    "telegram": "^2.26.22"
-  }
-}
