@@ -3798,6 +3798,8 @@ a.q-submit-btn {
     will-change: transform;
     margin-top: auto;
     align-self: stretch;
+    /* как раньше у absolute bottom: ~визуальный зазор от низа первого экрана */
+    margin-bottom: clamp(100px, 22vh, 184px);
   }
 
   .cta-section .hero-btn {
@@ -4050,14 +4052,14 @@ a.q-submit-btn {
     font-weight: 600;
   }
 
-  /* Кнопка в потоке: прижата к низу wrap через margin-top:auto у ≤960; здесь только отступ от safe-area */
+  /* Кнопка в потоке + зазор от низа как у старого bottom: calc(128px + 56px) */
   .hero--video .hero-btn {
     position: static;
     left: auto;
     right: auto;
     transform: none;
     margin-top: auto;
-    margin-bottom: max(12px, env(safe-area-inset-bottom, 0px));
+    margin-bottom: calc(128px + 56px + env(safe-area-inset-bottom, 0px));
     width: 100%;
     display: block;
     text-align: center;
