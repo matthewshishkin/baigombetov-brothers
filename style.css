@@ -3811,6 +3811,7 @@ a.q-submit-btn {
   /*
     Иначе align-items:center у .hero-content-wrap сжимает колонку по max-content —
     кнопка с width:100% считается от узкой ширины, длинный текст (KK) вылезает за рамку.
+    flex-start: заголовок и плашки у верхней части блока (как до рефакторинга), не по центру flex-1.
   */
   .hero--video .hero-content {
     align-self: stretch;
@@ -3818,6 +3819,8 @@ a.q-submit-btn {
     max-width: 100%;
     min-width: 0;
     box-sizing: border-box;
+    justify-content: flex-start;
+    margin-top: clamp(36px, 9vw, 72px);
   }
 
   /* Law cards */
