@@ -419,23 +419,28 @@ h3 { font-weight: normal; font-size: 1.05rem; }
   padding-bottom: 100px;
   width: 100%;
   height: calc(100vh - var(--header-h));
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
+  align-items: stretch;
+  justify-content: flex-start;
 }
 
-.hero-btn {
-  position: absolute;
-  bottom: 60px;
-  left: 50%;
-  transform: translateX(-50%);
+/* Заголовок + плашки центрируются в свободной высоте; кнопка — в потоке под ними (без absolute → нет наезда при других шрифтах/масштабе) */
+.hero-content {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  min-height: 0;
 }
 
 /* Shake whole hero button incl. border */
 .hero--video .hero-btn {
-  animation: heroCtaShakeCentered 2.5s ease-in-out infinite;
+  animation: heroCtaShake 2.5s ease-in-out infinite;
   will-change: transform;
 }
 
@@ -507,9 +512,14 @@ h3 { font-weight: normal; font-size: 1.05rem; }
   transition: background 0.22s ease, color 0.22s ease;
 }
 
-/* Только hero-кнопке нужен контекст для позиционирования */
 .hero--video .hero-btn {
-  position: absolute;
+  position: static;
+  transform: none;
+  left: auto;
+  bottom: auto;
+  align-self: center;
+  flex-shrink: 0;
+  margin-top: clamp(32px, 5vh, 72px);
   overflow: visible;
   /* Как кнопка в последнем блоке (.cta-section .hero-btn) */
   background: var(--blue);
@@ -581,11 +591,6 @@ h3 { font-weight: normal; font-size: 1.05rem; }
   box-shadow:
     0 12px 36px rgba(123, 26, 43, 0.42),
     0 5px 16px rgba(123, 26, 43, 0.32);
-}
-
-/* Desktop: кнопка ближе к заголовку */
-@media (min-width: 961px) {
-  .hero-btn { bottom: clamp(250px, 28vh, 340px); }
 }
 
 /* =============================================
@@ -3782,8 +3787,18 @@ a.q-submit-btn {
    ============================================= */
 @media (max-width: 960px) {
   /* Hero */
+  .hero-content-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
   .hero-btn                { position: static; transform: none; display: block; width: 100%; text-align: center; padding: 16px 24px; box-sizing: border-box; margin-top: auto; }
-  .hero--video .hero-btn   { animation: heroCtaShake 2.5s ease-in-out infinite; will-change: transform; }
+  .hero--video .hero-btn   {
+    animation: heroCtaShake 2.5s ease-in-out infinite;
+    will-change: transform;
+    margin-top: auto;
+    align-self: stretch;
+  }
 
   .cta-section .hero-btn {
     display: block;
@@ -3868,18 +3883,8 @@ a.q-submit-btn {
   .quiz-container          { padding: 44px 22px 36px; }
 }
 
-/* Tablet/desktop окна: вернуть кнопке hero desktop-позиционирование */
 @media (min-width: 701px) and (max-width: 960px) {
-  .hero-btn{
-    position: absolute;
-    bottom: 150px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: inline-block;
-    width: auto;
-  }
-
-  /* CTA — не герой: без absolute */
+  /* CTA — не герой */
   .cta-section .hero-btn {
     position: static;
     transform: none;
@@ -3920,7 +3925,7 @@ a.q-submit-btn {
     flex-direction: column;
     min-height: calc(100vh - var(--header-h));
     justify-content: flex-start;
-    align-items: center;
+    align-items: stretch;
   }
   .hero--video .hero-content {
     margin-top: 52px;
@@ -4042,18 +4047,15 @@ a.q-submit-btn {
     font-weight: 600;
   }
 
-  /* Кнопка внизу блока; только bottom (без top), иначе кнопка растягивается на весь экран */
+  /* Кнопка в потоке: прижата к низу wrap через margin-top:auto у ≤960; здесь только отступ от safe-area */
   .hero--video .hero-btn {
-    position: absolute;
-    top: auto;
-    left: 24px;
-    right: 24px;
+    position: static;
+    left: auto;
+    right: auto;
     transform: none;
-    /* было 128px — подняли на ~высоту кнопки без конфликта top/bottom */
-    bottom: calc(128px + 56px);
-    margin-top: 0;
-    width: auto;
-    height: auto;
+    margin-top: auto;
+    margin-bottom: max(12px, env(safe-area-inset-bottom, 0px));
+    width: 100%;
     display: block;
     text-align: center;
     padding: 16px 24px;
