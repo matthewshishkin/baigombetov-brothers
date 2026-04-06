@@ -3,6 +3,8 @@
  * Должен открываться: GET /api/send-telegram
  * parse_mode HTML + tg-spoiler для UTM
  */
+const crypto = require('crypto');
+
 const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 const UPSTASH_REDIS_REST_URL = process.env.UPSTASH_REDIS_REST_URL;
@@ -72,6 +74,42 @@ function sanitizePageUrl(raw) {
   }
 }
 
+/**
+ * Ключ Redis для лида по «странице» (один сайт — разные пути считаются отдельно).
+ * Учитываются hostname + pathname (без query/hash), регистр хоста нижний.
+ */
+function buildPageLeadKey(pageUrl) {
+  if (!pageUrl) return null;
+  try {
+    const u = new URL(pageUrl);
+    const host = u.hostname.toLowerCase();
+    let path = u.pathname || '/';
+    if (path.length > 1 && path.endsWith('/')) path = path.slice(0, -1);
+    const suffix = `${host}${path}`;
+    if (suffix.length > 380) {
+      const h = crypto.createHash('sha256').update(suffix).digest('hex').slice(0, 40);
+      return `leads:page:${h}`;
+    }
+    return `leads:page:${suffix}`;
+  } catch {
+    return null;
+  }
+}
+
+/** Короткая подпись для Telegram (домен + путь) */
+function formatPageLabel(pageUrl) {
+  if (!pageUrl) return '—';
+  try {
+    const u = new URL(pageUrl);
+    const host = u.hostname.toLowerCase();
+    const path = u.pathname || '/';
+    const s = path === '/' ? host : `${host}${path}`;
+    return s.length > 140 ? `${s.slice(0, 137)}…` : s;
+  } catch {
+    return '—';
+  }
+}
+
 /** Telegram HTML: &, <, > */
 function escapeHtml(s) {
   return String(s)
@@ -123,7 +161,15 @@ function bodyToTelegramHtml(plain) {
   return escapeHtml(plain).replace(/\r\n/g, '\n');
 }
 
-function buildMessageHtml({ text, utm, totalLeadNo, perAdLeadNo, adName, pageUrl }) {
+function buildMessageHtml({
+  text,
+  utm,
+  totalLeadNo,
+  perAdLeadNo,
+  adName,
+  pageUrl,
+  perPageLeadNo,
+}) {
   const blocks = [];
   blocks.push('🔔 Новая заявка с сайта!');
   blocks.push('');
@@ -143,6 +189,13 @@ function buildMessageHtml({ text, utm, totalLeadNo, perAdLeadNo, adName, pageUrl
   if (pageUrl) {
     const safe = escapeHtml(pageUrl);
     blocks.push(`🌐 Страница: <a href="${safe}">${safe}</a>`);
+    const label = formatPageLabel(pageUrl);
+    const safeLabel = escapeHtml(label);
+    if (typeof perPageLeadNo === 'number') {
+      blocks.push(`По этой странице (путь): ${pluralLeadsRu(perPageLeadNo)} (${safeLabel})`);
+    } else {
+      blocks.push(`По этой странице (путь): — (${safeLabel})`);
+    }
   } else {
     blocks.push('🌐 Страница: —');
   }
@@ -175,7 +228,8 @@ async function handler(req, res) {
   if (req.method === 'GET') {
     return res.status(200).json({
       ok: true,
-      hint: 'POST JSON: { "text": "...", "utm": { ... }, "pageUrl": "https://..." }',
+      hint:
+        'POST JSON: { "text": "...", "utm": { ... }, "pageUrl": "https://..." } — счётчики: leads:total, leads:ad:{utm_term}, leads:page:{host+path}',
     });
   }
 
@@ -201,6 +255,8 @@ async function handler(req, res) {
 
   const totalLeadNo = await upstashIncr('leads:total');
   const perAdLeadNo = adName ? await upstashIncr(`leads:ad:${adName}`) : null;
+  const pageKey = pageUrl ? buildPageLeadKey(pageUrl) : null;
+  const perPageLeadNo = pageKey ? await upstashIncr(pageKey) : null;
 
   const html = buildMessageHtml({
     text,
@@ -209,6 +265,7 @@ async function handler(req, res) {
     perAdLeadNo,
     adName,
     pageUrl,
+    perPageLeadNo,
   });
 
   const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
