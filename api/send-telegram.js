@@ -57,6 +57,21 @@ function normalizeUtm(utm) {
   return hasAny ? out : null;
 }
 
+/** URL страницы заявки (домен + путь); только http(s), длина ограничена */
+function sanitizePageUrl(raw) {
+  if (raw == null || typeof raw !== 'string') return null;
+  const s = String(raw).trim();
+  if (!s) return null;
+  try {
+    const u = new URL(s);
+    if (u.protocol !== 'http:' && u.protocol !== 'https:') return null;
+    const href = u.href;
+    return href.length > 2000 ? href.slice(0, 2000) : href;
+  } catch {
+    return null;
+  }
+}
+
 /** Telegram HTML: &, <, > */
 function escapeHtml(s) {
   return String(s)
@@ -108,7 +123,7 @@ function bodyToTelegramHtml(plain) {
   return escapeHtml(plain).replace(/\r\n/g, '\n');
 }
 
-function buildMessageHtml({ text, utm, totalLeadNo, perAdLeadNo, adName }) {
+function buildMessageHtml({ text, utm, totalLeadNo, perAdLeadNo, adName, pageUrl }) {
   const blocks = [];
   blocks.push('🔔 Новая заявка с сайта!');
   blocks.push('');
@@ -124,6 +139,12 @@ function buildMessageHtml({ text, utm, totalLeadNo, perAdLeadNo, adName }) {
     } else {
       blocks.push(`От крео &quot;${safeName}&quot;: —`);
     }
+  }
+  if (pageUrl) {
+    const safe = escapeHtml(pageUrl);
+    blocks.push(`🌐 Страница: <a href="${safe}">${safe}</a>`);
+  } else {
+    blocks.push('🌐 Страница: —');
   }
   blocks.push('');
   const spoiler = buildUtmSpoilerHtml(utm);
@@ -154,7 +175,7 @@ async function handler(req, res) {
   if (req.method === 'GET') {
     return res.status(200).json({
       ok: true,
-      hint: 'POST JSON: { "text": "...", "utm": { ... } }',
+      hint: 'POST JSON: { "text": "...", "utm": { ... }, "pageUrl": "https://..." }',
     });
   }
 
@@ -176,6 +197,7 @@ async function handler(req, res) {
 
   const utm = normalizeUtm(body && body.utm);
   const adName = utm && utm.utm_term ? utm.utm_term : null;
+  const pageUrl = sanitizePageUrl(body && body.pageUrl);
 
   const totalLeadNo = await upstashIncr('leads:total');
   const perAdLeadNo = adName ? await upstashIncr(`leads:ad:${adName}`) : null;
@@ -186,6 +208,7 @@ async function handler(req, res) {
     totalLeadNo,
     perAdLeadNo,
     adName,
+    pageUrl,
   });
 
   const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;

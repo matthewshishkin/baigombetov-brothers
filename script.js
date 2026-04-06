@@ -1062,16 +1062,27 @@ function getUtmFromUrl() {
   }
 }
 
+/** Полный URL страницы (домен + путь + query) — для Telegram «с какой страницы заявка» */
+function getPageUrlForLead() {
+  try {
+    const href = String(window.location.href || '').trim();
+    return href || null;
+  } catch (_) {
+    return null;
+  }
+}
+
 /**
  * Отправка заявки через прокси Vercel (без CORS).
  */
 async function sendQuizLeadToTelegram(form) {
   const text = buildTelegramLeadMessage(form);
   const utm = getUtmFromUrl();
+  const pageUrl = getPageUrlForLead();
   const res = await fetch(TELEGRAM_PROXY_URL, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ text, utm }),
+    body: JSON.stringify({ text, utm, pageUrl }),
   });
   const data = await res.json().catch(() => ({}));
   if (!res.ok || !data || data.ok !== true) {
