@@ -1657,6 +1657,14 @@ blockquote {
   padding: 0 8px;
   text-align: center;
 }
+.certs-caption {
+  display: none;
+}
+
+.certs-slide--landscape .certs-thumb-btn img {
+  transform: rotate(90deg);
+  transform-origin: center center;
+}
 .certs-thumb-btn {
   display: inline-block;
   width: auto;
