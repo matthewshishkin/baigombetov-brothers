@@ -52,8 +52,9 @@ function normalizeUtm(utm) {
     utm_source: sanitizeUtmValue(utm.utm_source),
     utm_medium: sanitizeUtmValue(utm.utm_medium),
     utm_campaign: sanitizeUtmValue(utm.utm_campaign),
+    /** Рекомендуемый шаблон: utm_content={{ad.name}} */
     utm_content: sanitizeUtmValue(utm.utm_content),
-    /** {{ad.name}} из рекламы; старые ссылки могли слать utm_term — храним для спойлера */
+    /** legacy: старые ссылки могли слать utm_adname/utm_term — храним для спойлера */
     utm_adname: sanitizeUtmValue(utm.utm_adname),
     utm_term: sanitizeUtmValue(utm.utm_term),
   };
@@ -305,7 +306,8 @@ async function handler(req, res) {
   }
 
   const utm = normalizeUtm(body && body.utm);
-  const adName = utm ? utm.utm_adname || utm.utm_term || null : null;
+  // В актуальном шаблоне {{ad.name}} приходит в utm_content
+  const adName = utm ? utm.utm_content || utm.utm_adname || utm.utm_term || null : null;
   const pageUrl = sanitizePageUrl(body && body.pageUrl);
   const lead = normalizeLead(body && body.lead);
 
