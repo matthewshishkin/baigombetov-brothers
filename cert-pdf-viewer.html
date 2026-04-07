@@ -107,7 +107,7 @@
         return;
       }
       var okCert = /^certificates\/[a-zA-Z0-9._-]+\.pdf$/i.test(pathOnly);
-      var okLead = /^lead-magnet-1080x1920(?:-v2)?\.pdf$/i.test(pathOnly);
+      var okLead = /^(?:lead-magnet-1080x1920(?:-v2)?|lead-magnet-thanks-ru)\.pdf$/i.test(pathOnly);
       if (!okCert && !okLead) {
         statusEl.textContent = 'Доступ к файлу запрещён.';
         statusEl.classList.add('err');
