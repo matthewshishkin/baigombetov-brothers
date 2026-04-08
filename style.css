@@ -4063,7 +4063,7 @@ a.q-submit-btn {
     margin-left: 0;
     margin-right: 0;
     margin-top: -10px;
-    margin-bottom: 18px;
+    margin-bottom: 32px;
     /* +10% к зазору только на мобиле (см. базовые 10px у .hero-subtitle) */
     gap: 11px;
   }
