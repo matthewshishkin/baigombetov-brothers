@@ -4156,3 +4156,85 @@ a.q-submit-btn {
 
 /* CTA */
 .cta-sub { font-size: 1.02rem; }
+
+/* =============================================
+   SMALL ANDROID / NARROW SCREENS (≤ 390px)
+   ============================================= */
+@media (max-width: 390px) {
+  /* Base font scale down */
+  html { font-size: 14px; }
+
+  /* Container padding narrower */
+  .container { padding-inline: 16px; }
+
+  /* Headings — reduce minimums so clamp actually scales down */
+  h1 { font-size: clamp(1.7rem, 8vw, 3rem); }
+  h2 { font-size: clamp(1.5rem, 7vw, 2.8rem); }
+  h3 { font-size: 1.25rem; }
+
+  /* Hero title + section titles */
+  .hero-title        { font-size: clamp(1.45rem, 6.8vw, 2.4rem); }
+  .section-title     { font-size: clamp(1.45rem, 6.8vw, 2.4rem); }
+  .owner-name        { font-size: clamp(1.45rem, 6.8vw, 2.4rem); }
+  .monitoring-big-title { font-size: clamp(1.45rem, 6.8vw, 2.4rem); }
+  .cta-content h2    { font-size: clamp(1.45rem, 6.8vw, 2.4rem); }
+
+  /* Hero pills — меньше текст и паддинг */
+  .hero-pill {
+    font-size: 0.72rem;
+    padding: 6px 9px;
+  }
+
+  /* Hero button */
+  .hero--video .hero-btn {
+    padding: 14px 16px;
+    font-size: 0.95rem;
+    margin-bottom: calc(80px + env(safe-area-inset-bottom, 0px));
+  }
+
+  /* Stats showcase */
+  .stats-showcase-num   { font-size: clamp(2.2rem, 12vw, 3.5rem); }
+  .stats-showcase-label { font-size: 0.85rem; }
+
+  /* Quiz */
+  .q-step h3            { font-size: 1.2rem; }
+  .q-step#step6 h3      { font-size: 1.2rem; }
+  .quiz-container       { padding: 20px 14px; }
+
+  /* Founders */
+  .founder-name         { font-size: 0.78rem; }
+  .founder-avatar--slot1 {
+    transform: translateX(calc(-50% + min(35vw, 240px) + 8px));
+  }
+  .founder-avatar--slot2 {
+    transform: translateX(calc(-50% - min(35vw, 240px) - 8px));
+  }
+
+  /* Owner photo */
+  .owner-img {
+    width: min(80vw, 280px);
+    max-width: 280px;
+  }
+
+  /* Marquee logos smaller */
+  .marquee-item     { height: 130px; margin: 0 40px; }
+  .marquee-item img { height: 130px; max-width: 260px; }
+
+  /* Partners / tariff */
+  .partners-grid  { grid-template-columns: 1fr; }
+  .tariff-card    { padding: 18px 14px; }
+
+  /* Risk cards */
+  .risk-cards { gap: 10px; }
+
+  /* Body text */
+  .section p,
+  .dark-section p,
+  .section li,
+  .dark-section li { font-size: 0.92rem; }
+
+  .cta-sub { font-size: 0.92rem; }
+
+  /* Header button */
+  .btn-header { font-size: 0.72rem; padding: 5px 7px; }
+}
