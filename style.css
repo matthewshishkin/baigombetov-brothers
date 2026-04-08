@@ -4094,14 +4094,14 @@ a.q-submit-btn {
     font-weight: 600;
   }
 
-  /* Кнопка в потоке + зазор от низа как у старого bottom: calc(128px + 56px) */
+  /* Кнопка в потоке: всегда ниже плашек с фиксированным зазором */
   .hero--video .hero-btn {
     position: static;
     left: auto;
     right: auto;
     transform: none;
-    margin-top: auto;
-    margin-bottom: calc(128px + 56px + env(safe-area-inset-bottom, 0px));
+    margin-top: 0;
+    margin-bottom: clamp(40px, 8vh, 80px);
     width: 100%;
     display: block;
     text-align: center;
