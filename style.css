@@ -3969,7 +3969,7 @@ a.q-submit-btn {
     align-items: stretch;
   }
   .hero--video .hero-content {
-    margin-top: 52px;
+    margin-top: 0;
   }
   .hero-video       { object-position: 52% center; } /* ещё вправо на 10% */
   .risk-cards       { grid-template-columns: 1fr; }
