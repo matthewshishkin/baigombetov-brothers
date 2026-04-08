@@ -9,6 +9,7 @@ const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 const UPSTASH_REDIS_REST_URL = process.env.UPSTASH_REDIS_REST_URL;
 const UPSTASH_REDIS_REST_TOKEN = process.env.UPSTASH_REDIS_REST_TOKEN;
+const GOOGLE_SHEETS_WEBHOOK = process.env.GOOGLE_SHEETS_WEBHOOK;
 
 function readJsonBody(req) {
   return new Promise((resolve, reject) => {
@@ -340,6 +341,28 @@ async function handler(req, res) {
   });
 
   const data = await r.json().catch(() => ({}));
+
+  // Запись в Google Sheets (fire-and-forget, не блокирует ответ)
+  if (GOOGLE_SHEETS_WEBHOOK) {
+    const d = digitsToInternationalDigits(normalizePhoneDigits(lead && lead.phone));
+    const waUrl = d && d.length >= 10 ? `https://wa.me/${d}` : '';
+    const now = new Date().toLocaleString('ru-RU', { timeZone: 'Asia/Almaty' });
+    fetch(GOOGLE_SHEETS_WEBHOOK, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        leadNo: totalLeadNo || '',
+        datetime: now,
+        utmContent: (utm && (utm.utm_content || utm.utm_adname)) || '',
+        pageUrl: pageUrl || '',
+        name: (lead && lead.name) || '',
+        city: (lead && lead.city) || '',
+        phone: (lead && lead.phone) || '',
+        whatsapp: waUrl,
+      }),
+    }).catch(() => {});
+  }
+
   return res.status(r.ok && data.ok ? 200 : 502).json(data);
 }
 
