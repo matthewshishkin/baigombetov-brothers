@@ -4053,6 +4053,12 @@ a.q-submit-btn {
   .hero-title { font-size: clamp(1.7rem, 7.14vw, 3.4rem); text-align: left; }
   .hero-title .title-desktop-only br { display: none; }
 
+  /* Hero button: fixed gap below pills, no auto margin that causes sticking */
+  .hero--video .hero-btn {
+    margin-top: 0;
+    margin-bottom: clamp(40px, 8vh, 80px);
+  }
+
   /* Hero subtitle pills: align left, stay within title width; no border on mobile */
   .hero-subtitle {
     justify-content: flex-start;
